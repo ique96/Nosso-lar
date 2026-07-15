@@ -21,7 +21,7 @@ body{
     linear-gradient(135deg,#fffaf5,#fff5f8 52%,#f7f4ff);
   min-height:100vh;
 }
-.wrap{max-width:1180px;margin:auto;padding:24px 16px calc(48px + var(--safe-bottom))}
+.wrap{max-width:1230px;margin:auto;padding:24px 16px calc(48px + var(--safe-bottom))}
 .hero{
   position:relative; overflow:hidden; border-radius:24px; padding:28px 24px;
   background:linear-gradient(120deg,#613846,#966075 65%,#a27087); box-shadow:var(--shadow); color:#fff;
@@ -53,8 +53,6 @@ body{
 .household-info b{display:block;color:var(--wine);font:700 1.05rem Georgia,serif}
 .household-info span{display:block;color:var(--muted);font-size:.82rem;margin-top:2px}
 .household-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-.invite-link{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);border-radius:11px;padding:8px 10px;min-width:0}
-.invite-link input{border:0;background:transparent;font:inherit;color:var(--ink);min-width:150px;max-width:260px;padding:0;font-size:.82rem}
 .members-pills{display:flex;gap:6px;flex-wrap:wrap}
 .member-pill{display:inline-flex;align-items:center;gap:5px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:4px 9px 4px 4px;font-size:.76rem;color:#6d5665}
 .member-pill img{width:20px;height:20px;border-radius:50%;object-fit:cover;background:#f0e4e8}
@@ -67,7 +65,6 @@ body{
 .error-banner b{display:block; margin-bottom:4px}
 .error-banner code{font-size:.78rem; background:#ffe7ec; padding:1px 5px; border-radius:6px; word-break:break-word}
 
-/* Overlay de login — obrigatório esconder de verdade */
 .auth-overlay{
   position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;
   padding:20px;background:rgba(60,35,45,.54);backdrop-filter:blur(7px);
@@ -136,38 +133,53 @@ button:disabled{opacity:.65;cursor:wait;transform:none}
 .room-title h2{margin:0;color:var(--wine);font:700 clamp(1.2rem,4vw,1.55rem) Georgia,serif}
 .room-count{font-size:.78rem;color:var(--muted);background:#fff;border:1px solid var(--line);border-radius:999px;padding:6px 10px;white-space:nowrap}
 .table-wrap{overflow-x:auto;padding:12px 12px 4px; -webkit-overflow-scrolling:touch}
-table{width:100%;min-width:980px;border-collapse:collapse}
+table{width:100%;min-width:1140px;border-collapse:collapse}
 th{padding:10px 8px; text-align:left; color:var(--muted); font-size:.68rem; letter-spacing:.07em; text-transform:uppercase; white-space:nowrap}
 td{padding:6px 5px;border-top:1px solid #f2e9ec;vertical-align:middle}
 input,select{width:100%; min-height:44px; padding:10px 12px; border:1px solid transparent; border-radius:10px; background:transparent; color:var(--ink); font:inherit; outline:none; appearance:auto}
-/* IMPORTANTE: largura suficiente para "Importante" e "Pesquisando" */
 select{
-  min-width:168px;
+  min-width:172px;
   padding-right:34px;
   white-space:nowrap;
   overflow:visible;
   text-overflow:clip;
+  font-size:.88rem;
   background-color:rgba(255,255,255,.55);
 }
 input:hover,select:hover{background:#fff;border-color:#eee0e5}
 input:focus,select:focus{background:#fff;border-color:#d9849a;box-shadow:0 0 0 3px rgba(215,123,145,.13)}
 .item{min-width:150px;font-weight:700}
-.link{min-width:140px;color:#946476}
-.value{min-width:118px;text-align:right;font-variant-numeric:tabular-nums}
-.priority,.status{min-width:168px;width:168px}
-.notes{min-width:140px}
+.link{min-width:120px;color:#946476}
+.link-wrap{display:flex;gap:6px;align-items:center}
+.go-btn{flex:0 0 auto;padding:0 12px;min-height:40px;background:#fff0f3;color:var(--rose);border-radius:9px;font-weight:800;font-size:.78rem;white-space:nowrap}
+.go-btn:disabled{opacity:.4;cursor:not-allowed}
+.value{min-width:112px;text-align:right;font-variant-numeric:tabular-nums}
+.priority,.status{min-width:172px;width:172px}
+.notes{min-width:130px}
 .remove{width:40px;height:40px;min-height:40px;padding:0;color:#ad6275;background:#fff0f3;font-size:1.2rem}
 .room-footer{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:14px 16px 16px;border-top:1px solid #f4eaed}
 .add-row{color:var(--rose);background:#fff0f3}
 .subtotal{font-size:.9rem;color:var(--muted)}
 .subtotal b{color:var(--rose);font-size:1.04rem}
+
+.added-by-row{margin-top:6px}
+.added-by{display:inline-flex;align-items:center;gap:5px;font-size:.7rem;color:var(--muted);background:#f8f2f4;border-radius:999px;padding:3px 8px}
+.added-by img{width:16px;height:16px;border-radius:50%;object-fit:cover}
+.added-by.muted{opacity:.7;font-style:italic}
+
+.approve-cell{white-space:nowrap;text-align:center}
+.approve-btn{display:inline-block;background:#fff0f3;color:#ad6275;border-radius:10px;padding:9px 12px;font-size:.76rem;font-weight:800;min-height:38px;width:100%}
+.approve-btn.active{background:#fff3d6;color:#a27739}
+.approve-btn.complete{background:#e2f6ea;color:#2f8a55}
+.approve-count{display:block;text-align:center;font-size:.66rem;color:var(--muted);margin-top:4px}
+
 .summary{margin-top:22px; background:rgba(255,255,255,.93); border:1px solid rgba(255,255,255,.95); border-radius:20px; box-shadow:var(--shadow); overflow:hidden}
 .summary-head{display:flex;align-items:end;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:20px 16px 14px; background:linear-gradient(100deg,#fff5f7,#f2edff)}
 .summary-head h2{color:var(--wine);margin:0;font:700 clamp(1.3rem,4vw,1.65rem) Georgia,serif}
 .summary-head p{margin:4px 0 0;color:var(--muted);font-size:.88rem}
 .summary-total{color:var(--rose);font:700 1.2rem Georgia,serif;white-space:nowrap}
 .summary-table{padding:8px 12px 16px}
-.summary-table table{min-width:700px}
+.summary-table table{min-width:820px}
 .room-pill{display:inline-block;border-radius:99px;padding:5px 8px;background:#f7edf1;color:#8b5266;font-size:.76rem;font-weight:700}
 .empty{padding:28px 16px;text-align:center;color:var(--muted)}
 .mobile-hint{display:none;margin:0 0 10px;color:var(--muted);font-size:.8rem}
@@ -180,6 +192,7 @@ footer{text-align:center;color:var(--muted);font-size:.84rem;margin-top:22px;lin
 .field-label{display:block;margin:0 0 4px;color:var(--muted);font-size:.68rem;font-weight:800;letter-spacing:.07em;text-transform:uppercase}
 .item-card input,.item-card select{background:#faf7f8;border-color:#f0e4e8}
 .item-card select{min-width:0; width:100%}
+.item-card .approve-cell{background:#fbf7f8;border-radius:12px;padding:10px}
 
 @media(max-width:900px){.dashboard{grid-template-columns:1fr}.progress-card{grid-template-columns:1fr;gap:14px}}
 @media(max-width:720px){
@@ -195,7 +208,6 @@ footer{text-align:center;color:var(--muted);font-size:.84rem;margin-top:22px;lin
   .auth-actions{width:100%;justify-content:space-between}
   .auth-text b{max-width:210px}
   .household-actions{width:100%}
-  .invite-link input{max-width:150px}
   .summary-table{overflow-x:auto}
 }
 @media(max-width:420px){.item-card-grid{grid-template-columns:1fr}}
@@ -245,18 +257,14 @@ footer{text-align:center;color:var(--muted);font-size:.84rem;margin-top:22px;lin
       <div class="members-pills" id="membersPills" style="margin-top:8px"></div>
     </div>
     <div class="household-actions">
-      <div class="invite-link">
-        <input id="inviteInput" readonly value="">
-        <button class="soft" id="copyInviteBtn" type="button">Copiar link</button>
-      </div>
-      <button class="soft" id="leaveHomeBtn" type="button" title="Sair deste lar e criar um novo">Trocar de lar</button>
+      <button class="primary" id="copyInviteBtn" type="button">🔗 Copiar link de convite</button>
     </div>
   </section>
 
   <section class="dashboard">
     <div class="info">
       <b>Como funciona</b>
-      <p>Entrem com a conta Google de cada um e compartilhem o link de convite do lar. As alterações são salvas automaticamente e sincronizadas entre os dois na hora.</p>
+      <p>Entrem com a conta Google de cada um e compartilhem o link de convite do lar. Cada item mostra quem adicionou e só fica "Aprovado" quando os dois confirmarem. Tudo é salvo automaticamente.</p>
     </div>
     <div class="total">
       <span>Investimento estimado</span>
@@ -301,7 +309,7 @@ footer{text-align:center;color:var(--muted);font-size:.84rem;margin-top:22px;lin
   </div>
 
   <nav class="tabs" id="tabs" aria-label="Cômodos"></nav>
-  <p class="mobile-hint">No celular, deslize as abas e preencha cada item em cartões. Campos de prioridade e status aparecem completos.</p>
+  <p class="mobile-hint">No celular, deslize as abas e preencha cada item em cartões. Cada item mostra quem adicionou e o status de aprovação dos dois.</p>
   <section id="panels"></section>
 
   <section class="summary">
@@ -340,7 +348,7 @@ import {
   onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import {
-  getDatabase, ref, set, get, update, push, remove, onValue, off, serverTimestamp
+  getDatabase, ref, set, get, update, push, onValue, off, serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
 const firebaseConfig = {
@@ -359,6 +367,8 @@ const database = getDatabase(app);
 const googleProvider = new GoogleAuthProvider();
 googleProvider.setCustomParameters({ prompt: "select_account" });
 
+const REQUIRED_APPROVALS = 2;
+
 const rooms = [
   {name:"Quarto do casal", icon:"🛏️", items:["Cama / colchão","Guarda-roupa","Criado-mudo","Cabeceira","Cortinas / persianas","Luminária","Jogo de cama"]},
   {name:"Quarto 2 — nosso espaço", icon:"🎮", items:["Mesa gamer / trabalho","Cadeira","TV / projetor","Sofá / puff","Espelho para pole","Tapete","Prateleiras / decoração"]},
@@ -373,6 +383,7 @@ let state = {};
 let active = 0;
 let currentUser = null;
 let homeId = null;
+let inviteUrl = "";
 let plannerRef = null;
 let membersRef = null;
 let remoteListener = null;
@@ -386,6 +397,17 @@ const $ = (s) => document.querySelector(s);
 
 function esc(s){
   return String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
+function parseJSONSafe(str, fallback){
+  try{ return str ? JSON.parse(str) : fallback; }catch(e){ return fallback; }
+}
+function currentUserBrief(){
+  if(!currentUser) return null;
+  return {
+    uid: currentUser.uid,
+    name: currentUser.displayName || currentUser.email || "Alguém",
+    photoURL: currentUser.photoURL || ""
+  };
 }
 
 function getInviteHomeFromUrl(){
@@ -469,9 +491,9 @@ function setAuthUI(user){
 
 function setHouseholdUI(id){
   const bar = $("#householdBar");
-  if (!id) { bar.hidden = true; return; }
+  if (!id) { bar.hidden = true; inviteUrl = ""; return; }
   bar.hidden = false;
-  $("#inviteInput").value = inviteUrlFor(id);
+  inviteUrl = inviteUrlFor(id);
 }
 function renderMembers(members){
   const wrap = $("#membersPills");
@@ -483,7 +505,7 @@ function renderMembers(members){
   const count = list.length;
   $("#householdSubtitle").textContent = count > 1
     ? `${count} pessoas neste lar — alterações sincronizam em tempo real.`
-    : "Compartilhem o link abaixo para o outro entrar no mesmo lar.";
+    : "Copiem o link de convite para o outro entrar no mesmo lar.";
 }
 function memberPayload(user){
   return {
@@ -510,14 +532,12 @@ async function login(){
   $("#authHint").textContent = "Abrindo a tela do Google…";
 
   try {
-    // 1) tenta popup (melhor no desktop)
     await signInWithPopup(auth, googleProvider);
     setSync("saved", "Login ok");
   } catch (error) {
     console.error("Login popup error:", error);
     const code = error?.code || "";
 
-    // se o usuário cancelou, não força redirect
     if (code === "auth/popup-closed-by-user" || code === "auth/cancelled-popup-request") {
       setSync("error", "Login cancelado");
       $("#authHint").textContent = "Login cancelado. Clique de novo para tentar.";
@@ -525,7 +545,6 @@ async function login(){
       return;
     }
 
-    // 2) se popup bloqueado / problemas de pop-up → redirect
     if (
       code === "auth/popup-blocked" ||
       code === "auth/operation-not-supported-in-this-environment" ||
@@ -536,12 +555,12 @@ async function login(){
         setSync("saving", "Redirecionando…");
         $("#authHint").textContent = "Redirecionando para o Google…";
         await signInWithRedirect(auth, googleProvider);
-        return; // a página vai sair
+        return;
       } catch (redirectError) {
         console.error("Redirect error:", redirectError);
         setSync("error", "Erro no login");
         showError(`Erro de autenticação: <code>${esc(redirectError.code || redirectError.message)}</code><br>
-        Confira se o domínio do site está em <b>Authentication → Settings → Authorized domains</b> (ex.: ique96.github.io).`);
+        Confira se o domínio do site está em <b>Authentication → Settings → Authorized domains</b>.`);
       }
     } else {
       setSync("error", "Erro no login");
@@ -554,7 +573,7 @@ async function login(){
 }
 
 function defaultList(room){
-  return room.items.map(item => ({ item, priority: "Importante", status: "Pesquisando" }));
+  return room.items.map(item => ({ item, priority: "Importante", status: "Pesquisando", approvals: {}, addedBy: null }));
 }
 function selectOptions(field, value){
   const options = field === "priority"
@@ -562,33 +581,77 @@ function selectOptions(field, value){
     : ["Pesquisando", "Achamos!", "Comprado"];
   return options.map(o => `<option value="${o}" ${value === o ? "selected" : ""}>${o}</option>`).join("");
 }
+function addedByHTML(addedBy){
+  if (!addedBy || !addedBy.name) {
+    return `<span class="added-by muted">Ainda não editado</span>`;
+  }
+  return `<span class="added-by">${addedBy.photoURL ? `<img src="${esc(addedBy.photoURL)}" alt="">` : "👤"} ${esc(addedBy.name)}</span>`;
+}
+function approveHTML(approvals){
+  const approvedCount = Object.values(approvals || {}).filter(Boolean).length;
+  const meApproved = currentUser && approvals && approvals[currentUser.uid];
+  const complete = approvedCount >= REQUIRED_APPROVALS;
+  const label = complete ? "✅ Aprovado" : (meApproved ? "✓ Você aprovou" : "☐ Aprovar");
+  const cls = complete ? "complete" : (meApproved ? "active" : "");
+  return `<button type="button" class="approve-btn ${cls}">${label}</button><span class="approve-count">${approvedCount}/${REQUIRED_APPROVALS}</span>`;
+}
 function rowHTML(data = {}){
+  const approvals = parseJSONSafe(data.approvals, {});
+  const addedBy = parseJSONSafe(data.addedBy, null);
   return `<tr>
-    <td><input class="item" data-field="item" value="${esc(data.item || "")}" placeholder="Nome do item"></td>
-    <td><input class="link" data-field="link" value="${esc(data.link || "")}" placeholder="Loja ou link"></td>
+    <td>
+      <input class="item" data-field="item" value="${esc(data.item || "")}" placeholder="Nome do item">
+      <div class="added-by-row">${addedByHTML(addedBy)}</div>
+    </td>
+    <td>
+      <div class="link-wrap">
+        <input class="link" data-field="link" value="${esc(data.link || "")}" placeholder="Loja ou link">
+        <button type="button" class="go-btn" title="Abrir link">Ir ↗</button>
+      </div>
+    </td>
     <td><input class="value money" inputmode="decimal" data-field="value" value="${esc(data.value || "")}" placeholder="R$ 0,00"></td>
     <td><select class="priority" data-field="priority">${selectOptions("priority", data.priority || "Importante")}</select></td>
     <td><select class="status" data-field="status">${selectOptions("status", data.status || "Pesquisando")}</select></td>
+    <td class="approve-cell">${approveHTML(approvals)}</td>
     <td><input class="notes" data-field="notes" value="${esc(data.notes || "")}" placeholder="Observações"></td>
-    <td><button class="remove" type="button" title="Remover" aria-label="Remover item">×</button></td>
+    <td>
+      <input type="hidden" data-field="approvals" value="${esc(JSON.stringify(approvals))}">
+      <input type="hidden" data-field="addedBy" value="${esc(JSON.stringify(addedBy || {}))}">
+      <button class="remove" type="button" title="Remover" aria-label="Remover item">×</button>
+    </td>
   </tr>`;
 }
 function cardHTML(data = {}){
+  const approvals = parseJSONSafe(data.approvals, {});
+  const addedBy = parseJSONSafe(data.addedBy, null);
   return `<article class="item-card">
     <div class="item-card-head">
       <div class="full" style="flex:1">
         <label class="field-label">Item</label>
         <input class="item" data-field="item" value="${esc(data.item || "")}" placeholder="Nome do item">
+        <div class="added-by-row">${addedByHTML(addedBy)}</div>
       </div>
       <button class="remove" type="button" title="Remover" aria-label="Remover item">×</button>
     </div>
     <div class="item-card-grid">
-      <div class="full"><label class="field-label">Loja / oferta</label><input class="link" data-field="link" value="${esc(data.link || "")}" placeholder="Loja ou link"></div>
+      <div class="full">
+        <label class="field-label">Loja / oferta</label>
+        <div class="link-wrap">
+          <input class="link" data-field="link" value="${esc(data.link || "")}" placeholder="Loja ou link">
+          <button type="button" class="go-btn" title="Abrir link">Ir ↗</button>
+        </div>
+      </div>
       <div><label class="field-label">Valor</label><input class="value money" inputmode="decimal" data-field="value" value="${esc(data.value || "")}" placeholder="R$ 0,00"></div>
       <div><label class="field-label">Prioridade</label><select class="priority" data-field="priority">${selectOptions("priority", data.priority || "Importante")}</select></div>
       <div><label class="field-label">Status</label><select class="status" data-field="status">${selectOptions("status", data.status || "Pesquisando")}</select></div>
+      <div class="full approve-cell">
+        <label class="field-label">Aprovação (os dois precisam confirmar)</label>
+        ${approveHTML(approvals)}
+      </div>
       <div class="full"><label class="field-label">Observações</label><input class="notes" data-field="notes" value="${esc(data.notes || "")}" placeholder="Observações"></div>
     </div>
+    <input type="hidden" data-field="approvals" value="${esc(JSON.stringify(approvals))}">
+    <input type="hidden" data-field="addedBy" value="${esc(JSON.stringify(addedBy || {}))}">
   </article>`;
 }
 function build(){
@@ -599,7 +662,7 @@ function build(){
     const list = (state[i] && state[i].length) ? state[i] : defaultList(r);
     return `<article class="panel ${i === active ? "active" : ""}" data-room="${i}">
       <header class="room-head"><div class="room-title"><span class="icon">${r.icon}</span><h2>${r.name}</h2></div><span class="room-count">${list.length} item(ns)</span></header>
-      <div class="table-wrap"><table><thead><tr><th>Item</th><th>Loja / oferta</th><th>Valor</th><th>Prioridade</th><th>Status</th><th>Observações</th><th></th></tr></thead><tbody>${list.map(rowHTML).join("")}</tbody></table></div>
+      <div class="table-wrap"><table><thead><tr><th>Item</th><th>Loja / oferta</th><th>Valor</th><th>Prioridade</th><th>Status</th><th>Aprovado</th><th>Observações</th><th></th></tr></thead><tbody>${list.map(rowHTML).join("")}</tbody></table></div>
       <div class="cards">${list.map(cardHTML).join("")}</div>
       <footer class="room-footer"><button class="add-row" type="button">＋ Adicionar item</button><span class="subtotal">Subtotal: <b>R$&nbsp;0,00</b></span></footer>
     </article>`;
@@ -713,16 +776,61 @@ function renderSummary(all){
     el.innerHTML = '<div class="empty">Adicionem itens aos cômodos para vê-los aqui. ♡</div>';
     return;
   }
-  el.innerHTML = `<div class="table-wrap" style="display:block;padding:0"><table><thead><tr><th>Cômodo</th><th>Item</th><th>Loja / oferta</th><th>Valor</th><th>Prioridade</th><th>Status</th></tr></thead><tbody>${
-    all.map(x => `<tr>
+  el.innerHTML = `<div class="table-wrap" style="display:block;padding:0"><table><thead><tr><th>Cômodo</th><th>Item</th><th>Loja / oferta</th><th>Valor</th><th>Prioridade</th><th>Status</th><th>Aprovado</th></tr></thead><tbody>${
+    all.map(x => {
+      const approvals = parseJSONSafe(x.approvals, {});
+      const approvedCount = Object.values(approvals).filter(Boolean).length;
+      const complete = approvedCount >= REQUIRED_APPROVALS;
+      return `<tr>
       <td><span class="room-pill">${x.room.icon} ${esc(x.room.name)}</span></td>
       <td><b>${esc(x.item)}</b></td>
       <td>${x.link ? `<a href="${esc(x.link)}" target="_blank" rel="noopener" style="color:#9c5d70;word-break:break-all">${esc(x.link)}</a>` : "—"}</td>
       <td>${x.value ? brl.format(valNum(x.value)) : "—"}</td>
       <td>${esc(x.priority || "—")}</td>
       <td>${esc(x.status || "—")}</td>
-    </tr>`).join("")
+      <td>${complete ? "✅" : `${approvedCount}/${REQUIRED_APPROVALS}`}</td>
+    </tr>`;
+    }).join("")
   }</tbody></table></div>`;
+}
+function getTwinBlock(panel, block){
+  const isCard = block.classList.contains("item-card");
+  const blocks = isCard
+    ? [...panel.querySelectorAll(".item-card")]
+    : [...panel.querySelectorAll("tbody tr")];
+  const idx = blocks.indexOf(block);
+  return isCard
+    ? panel.querySelectorAll("tbody tr")[idx]
+    : panel.querySelectorAll(".item-card")[idx];
+}
+function setHiddenField(block, panel, field, value){
+  const el = block.querySelector(`[data-field="${field}"]`);
+  if (el) el.value = value;
+  const twin = getTwinBlock(panel, block);
+  if (twin) {
+    const twinEl = twin.querySelector(`[data-field="${field}"]`);
+    if (twinEl) twinEl.value = value;
+  }
+}
+function updateApproveUI(block, approvals){
+  if (!block) return;
+  const approvedCount = Object.values(approvals || {}).filter(Boolean).length;
+  const meApproved = currentUser && approvals && approvals[currentUser.uid];
+  const complete = approvedCount >= REQUIRED_APPROVALS;
+  const btn = block.querySelector(".approve-btn");
+  const countSpan = block.querySelector(".approve-count");
+  if (btn) {
+    btn.textContent = complete ? "✅ Aprovado" : (meApproved ? "✓ Você aprovou" : "☐ Aprovar");
+    btn.className = "approve-btn" + (complete ? " complete" : (meApproved ? " active" : ""));
+  }
+  if (countSpan) countSpan.textContent = `${approvedCount}/${REQUIRED_APPROVALS}`;
+}
+function updateAddedByUI(block, addedBy){
+  if (!block) return;
+  const span = block.querySelector(".added-by");
+  if (!span || !addedBy) return;
+  span.classList.remove("muted");
+  span.innerHTML = `${addedBy.photoURL ? `<img src="${esc(addedBy.photoURL)}" alt="">` : "👤"} ${esc(addedBy.name)}`;
 }
 function rerenderPanel(panel, list){
   panel.querySelector("tbody").innerHTML = list.map(rowHTML).join("");
@@ -744,7 +852,36 @@ function bindPanel(panel){
       recalc();
     };
   });
+
+  panel.querySelectorAll(".go-btn").forEach(btn => {
+    btn.onclick = () => {
+      const block = btn.closest("tr,.item-card");
+      const linkInput = block.querySelector('[data-field="link"]');
+      const raw = (linkInput?.value || "").trim();
+      if (!raw) return;
+      const url = /^https?:\/\//i.test(raw) ? raw : "https://" + raw;
+      window.open(url, "_blank", "noopener");
+    };
+  });
+
+  panel.querySelectorAll(".approve-btn").forEach(btn => {
+    btn.onclick = () => {
+      if (!currentUser) { alert("Entre com sua conta Google para aprovar itens."); return; }
+      const block = btn.closest("tr,.item-card");
+      const hiddenApprovals = block.querySelector('[data-field="approvals"]');
+      let approvals = parseJSONSafe(hiddenApprovals?.value, {});
+      if (approvals[currentUser.uid]) delete approvals[currentUser.uid];
+      else approvals[currentUser.uid] = true;
+      const value = JSON.stringify(approvals);
+      setHiddenField(block, panel, "approvals", value);
+      updateApproveUI(block, approvals);
+      updateApproveUI(getTwinBlock(panel, block), approvals);
+      recalc();
+    };
+  });
+
   panel.querySelectorAll("input,select").forEach(el => {
+    if (el.type === "hidden") return;
     el.oninput = () => {
       const block = el.closest("tr,.item-card");
       const isCard = block.classList.contains("item-card");
@@ -757,6 +894,14 @@ function bindPanel(panel){
         : panel.querySelectorAll(".item-card")[idx];
       const twin = twinRoot?.querySelector(`[data-field="${el.dataset.field}"]`);
       if (twin && twin !== el) twin.value = el.value;
+
+      const brief = currentUserBrief();
+      if (brief && el.value.trim()) {
+        const value = JSON.stringify(brief);
+        setHiddenField(block, panel, "addedBy", value);
+        updateAddedByUI(block, brief);
+        updateAddedByUI(twinRoot, brief);
+      }
       recalc();
     };
     el.onchange = () => {
@@ -783,7 +928,7 @@ function bind(){
   document.querySelectorAll(".panel").forEach(panel => {
     panel.querySelector(".add-row").onclick = () => {
       const list = readBlocks(panel);
-      list.push({ item: "", priority: "Importante", status: "Pesquisando" });
+      list.push({ item: "", priority: "Importante", status: "Pesquisando", approvals: "{}", addedBy: "{}" });
       rerenderPanel(panel, list);
       recalc();
     };
@@ -799,53 +944,32 @@ $("#clearData").onclick = () => {
   }
 };
 
-// listeners de login — addEventListener (mais confiável)
-$("#loginBtn").addEventListener("click", (e) => {
-  e.preventDefault();
-  login();
-});
-$("#overlayLoginBtn").addEventListener("click", (e) => {
-  e.preventDefault();
-  login();
-});
+$("#loginBtn").addEventListener("click", (e) => { e.preventDefault(); login(); });
+$("#overlayLoginBtn").addEventListener("click", (e) => { e.preventDefault(); login(); });
 $("#logoutBtn").addEventListener("click", async () => {
   try { await signOut(auth); }
   catch (e) { console.error(e); }
 });
 
 $("#copyInviteBtn").onclick = async () => {
-  const value = $("#inviteInput").value;
+  if (!inviteUrl) return;
   try {
-    await navigator.clipboard.writeText(value);
-    $("#copyInviteBtn").textContent = "Copiado! ✓";
+    await navigator.clipboard.writeText(inviteUrl);
   } catch {
-    $("#inviteInput").select();
+    const temp = document.createElement("textarea");
+    temp.value = inviteUrl;
+    temp.style.position = "fixed";
+    temp.style.opacity = "0";
+    document.body.appendChild(temp);
+    temp.focus();
+    temp.select();
     document.execCommand("copy");
-    $("#copyInviteBtn").textContent = "Copiado! ✓";
+    document.body.removeChild(temp);
   }
-  setTimeout(() => { $("#copyInviteBtn").textContent = "Copiar link"; }, 1800);
-};
-
-$("#leaveHomeBtn").onclick = async () => {
-  if (!currentUser || !homeId) return;
-  if (!confirm("Sair deste lar e criar um novo só seu? O atual continua existindo para os outros membros.")) return;
-  try {
-    setSync("saving", "Trocando de lar…");
-    await remove(ref(database, `households/${homeId}/members/${currentUser.uid}`));
-    homeId = push(ref(database, "households")).key;
-    await update(ref(database), {
-      [`users/${currentUser.uid}/homeId`]: homeId,
-      [`households/${homeId}/owner`]: currentUser.uid,
-      [`households/${homeId}/createdAt`]: serverTimestamp(),
-      [`households/${homeId}/members/${currentUser.uid}`]: memberPayload(currentUser)
-    });
-    await connectHome(currentUser);
-  } catch (e) {
-    console.error(e);
-    setSync("error", "Erro ao trocar");
-    if (String(e).includes("PERMISSION_DENIED") || e.code === "PERMISSION_DENIED") showError(permissionHelp());
-    else showError(esc(e.message || e));
-  }
+  const btn = $("#copyInviteBtn");
+  const original = btn.textContent;
+  btn.textContent = "Copiado! ✓";
+  setTimeout(() => { btn.textContent = original; }, 1800);
 };
 
 const pendingInvite = getInviteHomeFromUrl();
@@ -934,7 +1058,6 @@ async function connectHome(user){
   });
 }
 
-// Processa retorno do redirect (caso o popup tenha falhado antes)
 getRedirectResult(auth)
   .then(result => {
     if (result?.user) {
@@ -965,12 +1088,10 @@ onAuthStateChanged(auth, async (user) => {
     return;
   }
 
-  // garante overlay escondido mesmo se o CSS do navegador atrasar
   hideAuthOverlay();
   await connectHome(user);
 });
 
-// estado inicial visual da tela (antes do auth responder)
 build();
 setSync("", "Aguardando login");
 console.log("Nosso Lar: app carregado. Clique em Continuar com Google.");
