@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Nosso Lar — Planejador de Compras</title>
+<style>
+:root{
+  --wine:#643847; --rose:#c9657f; --pink2:#fff4f6; --lav:#ede8fa;
+  --ink:#342f37; --muted:#746b75; --line:#eadde3; --shadow:0 18px 45px rgba(91,48,63,.13);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; color:var(--ink);
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  background:
+    radial-gradient(circle at 6% 5%,#ffe3ea 0,transparent 25%),
+    radial-gradient(circle at 96% 3%,#e9e2fa 0,transparent 25%),
+    linear-gradient(135deg,#fffaf5,#fff5f8 52%,#f7f4ff);
+  min-height:100vh;
+}
+.wrap{max-width:1180px;margin:auto;padding:24px 16px calc(48px + var(--safe-bottom))}
+.hero{
+  position:relative; overflow:hidden; border-radius:24px; padding:28px 24px;
+  background:linear-gradient(120deg,#613846,#966075 65%,#a27087); box-shadow:var(--shadow); color:#fff;
+}
+.hero:after{content:"♡";position:absolute;right:24px;top:-20px;font-size:10rem;font-family:Georgia;opacity:.12}
+.eyebrow{margin:0 0 8px;font-size:.72rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;opacity:.85}
+.hero h1{position:relative;margin:0;font:700 clamp(2rem,7vw,4.1rem)/.95 Georgia,serif;letter-spacing:-.05em}
+.hero p{position:relative;max-width:620px;margin:14px 0 0;line-height:1.55;opacity:.94;font-size:.98rem}
+.hero-icons{position:absolute;right:28px;bottom:24px;font-size:1.9rem;letter-spacing:8px}
+.dashboard{display:grid;grid-template-columns:1.25fr .75fr;gap:14px;margin:16px 0}
+.info,.total{border:1px solid rgba(255,255,255,.9);border-radius:18px;padding:18px 18px;box-shadow:var(--shadow)}
+.info{background:rgba(255,255,255,.86)}
+.info b{color:var(--rose)}
+.info p{margin:6px 0 0;color:var(--muted);font-size:.92rem;line-height:1.5}
+.total{background:linear-gradient(125deg,#c45f78,#e093a6);color:#fff}
+.total span{display:block;text-transform:uppercase;letter-spacing:.1em;font-size:.7rem;font-weight:800;opacity:.9}
+.total strong{display:block;margin:4px 0;font:700 clamp(1.7rem,5vw,2.2rem) Georgia,serif}
+.total small{opacity:.92;font-size:.88rem}
+.budget-section{
+  margin:4px 0 18px; padding:18px; border:1px solid rgba(255,255,255,.93); border-radius:22px;
+  background:rgba(255,255,255,.8); box-shadow:var(--shadow);
+}
+.budget-title{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-bottom:14px;flex-wrap:wrap}
+.kicker{margin:0 0 4px;color:var(--rose);font-size:.68rem;font-weight:850;letter-spacing:.12em;text-transform:uppercase}
+.budget-title h2{margin:0;color:var(--wine);font:700 clamp(1.35rem,4vw,1.7rem) Georgia,serif}
+.budget-caption{color:var(--muted);font-size:.85rem}
+.budget-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.budget-card{padding:16px;border-radius:15px;border:1px solid transparent;min-width:0}
+.budget-card span{display:block;text-transform:uppercase;letter-spacing:.08em;font-size:.66rem;font-weight:800}
+.budget-card strong{display:block;margin:6px 0 3px;font:700 clamp(1.15rem,3.5vw,1.45rem) Georgia,serif;word-break:break-word}
+.budget-card small{color:var(--muted);font-size:.8rem}
+.budget-card.essential{background:#fff0f3;border-color:#f6d5de;color:#a84f68}
+.budget-card.important{background:#f5f1ff;border-color:#e5dcf7;color:#706091}
+.budget-card.desire{background:#fff7e8;border-color:#f5e5bd;color:#a27739}
+.progress-card{
+  display:grid;grid-template-columns:.9fr 1.5fr;align-items:center;gap:18px;
+  margin-top:12px;padding:18px;border-radius:16px;
+  background:linear-gradient(105deg,#673a48,#a66378);color:#fff
+}
+.progress-label{display:block;text-transform:uppercase;letter-spacing:.1em;font-size:.66rem;font-weight:800;opacity:.85}
+.progress-copy strong{display:block;margin:2px 0 4px;font:700 clamp(1.8rem,6vw,2.25rem) Georgia,serif}
+.progress-copy p{margin:0;font-size:.88rem;line-height:1.4;opacity:.93}
+.progress-track{height:14px;overflow:hidden;border-radius:99px;background:rgba(255,255,255,.25);box-shadow:inset 0 1px 2px rgba(0,0,0,.12)}
+.progress-track i{display:block;width:0%;height:100%;border-radius:inherit;background:linear-gradient(90deg,#ffd1dc,#fff6d8);transition:width .35s ease}
+.progress-meta{display:flex;justify-content:space-between;gap:10px;margin-top:10px;font-size:.82rem;flex-wrap:wrap}
+.progress-meta b{white-space:nowrap}
+.toolbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:16px 0 12px}
+.toolbar .hint{color:var(--muted);font-size:.86rem;margin-right:auto;line-height:1.35}
+button{
+  border:0; font:700 .88rem Inter,ui-sans-serif,system-ui,sans-serif; cursor:pointer;
+  transition:.18s transform,.18s box-shadow; border-radius:11px; padding:11px 14px; min-height:42px
+}
+button:hover{transform:translateY(-1px)}
+.soft{background:#fff;border:1px solid var(--line);color:#6d5260}
+.primary{background:var(--wine);color:#fff;box-shadow:0 8px 17px rgba(100,56,71,.2)}
+.tabs{
+  display:flex; gap:8px; overflow-x:auto; padding:6px 2px 12px; margin:0 -2px 2px;
+  scrollbar-width:thin; -webkit-overflow-scrolling:touch; scroll-snap-type:x proximity
+}
+.tab{
+  white-space:nowrap; background:rgba(255,255,255,.8); border:1px solid var(--line); color:#695866;
+  padding:11px 14px; scroll-snap-align:start; flex:0 0 auto
+}
+.tab.active{background:var(--wine);color:#fff;border-color:var(--wine);box-shadow:0 8px 16px rgba(100,56,71,.2)}
+.tab .tab-icon{margin-right:6px}
+.panel{
+  display:none; background:rgba(255,255,255,.93); border:1px solid rgba(255,255,255,.95);
+  border-radius:20px; box-shadow:var(--shadow); overflow:hidden
+}
+.panel.active{display:block;animation:fade .22s ease}
+@keyframes fade{from{opacity:.4;transform:translateY(4px)}to{opacity:1;transform:none}}
+.room-head{
+  display:flex; align-items:center; justify-content:space-between; gap:10px;
+  padding:18px 16px; background:linear-gradient(100deg,var(--pink2),var(--lav))
+}
+.room-title{display:flex;align-items:center;gap:10px;min-width:0}
+.room-title .icon{font-size:1.5rem;flex:0 0 auto}
+.room-title h2{margin:0;color:var(--wine);font:700 clamp(1.2rem,4vw,1.55rem) Georgia,serif}
+.room-count{font-size:.78rem;color:var(--muted);background:#fff;border:1px solid var(--line);border-radius:999px;padding:6px 10px;white-space:nowrap}
+.table-wrap{overflow-x:auto;padding:12px 12px 4px; -webkit-overflow-scrolling:touch}
+table{width:100%;min-width:820px;border-collapse:collapse}
+th{
+  padding:10px 8px; text-align:left; color:var(--muted); font-size:.68rem;
+  letter-spacing:.07em; text-transform:uppercase; white-space:nowrap
+}
+td{padding:6px 5px;border-top:1px solid #f2e9ec;vertical-align:middle}
+input,select{
+  width:100%; min-height:44px; padding:10px 10px; border:1px solid transparent; border-radius:10px;
+  background:transparent; color:var(--ink); font:inherit; outline:none; appearance:auto
+}
+select{
+  min-width:132px; padding-right:28px; white-space:nowrap; text-overflow:clip;
+  background-color:rgba(255,255,255,.55)
+}
+input:hover,select:hover{background:#fff;border-color:#eee0e5}
+input:focus,select:focus{background:#fff;border-color:#d9849a;box-shadow:0 0 0 3px rgba(215,123,145,.13)}
+.item{min-width:150px;font-weight:700}
+.link{min-width:140px;color:#946476}
+.value{min-width:118px;text-align:right;font-variant-numeric:tabular-nums}
+.priority{min-width:132px}
+.status{min-width:138px}
+.notes{min-width:140px}
+.remove{width:40px;height:40px;min-height:40px;padding:0;color:#ad6275;background:#fff0f3;font-size:1.2rem}
+.room-footer{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;
+  padding:14px 16px 16px;border-top:1px solid #f4eaed
+}
+.add-row{color:var(--rose);background:#fff0f3}
+.subtotal{font-size:.9rem;color:var(--muted)}
+.subtotal b{color:var(--rose);font-size:1.04rem}
+.summary{
+  margin-top:22px; background:rgba(255,255,255,.93); border:1px solid rgba(255,255,255,.95);
+  border-radius:20px; box-shadow:var(--shadow); overflow:hidden
+}
+.summary-head{
+  display:flex;align-items:end;justify-content:space-between;gap:12px;flex-wrap:wrap;
+  padding:20px 16px 14px; background:linear-gradient(100deg,#fff5f7,#f2edff)
+}
+.summary-head h2{color:var(--wine);margin:0;font:700 clamp(1.3rem,4vw,1.65rem) Georgia,serif}
+.summary-head p{margin:4px 0 0;color:var(--muted);font-size:.88rem}
+.summary-total{color:var(--rose);font:700 1.2rem Georgia,serif;white-space:nowrap}
+.summary-table{padding:8px 12px 16px}
+.summary-table table{min-width:700px}
+.room-pill{display:inline-block;border-radius:99px;padding:5px 8px;background:#f7edf1;color:#8b5266;font-size:.76rem;font-weight:700}
+.empty{padding:28px 16px;text-align:center;color:var(--muted)}
+.mobile-hint{display:none;margin:0 0 10px;color:var(--muted);font-size:.8rem}
+footer{text-align:center;color:var(--muted);font-size:.84rem;margin-top:22px;line-height:1.4}
+
+/* Cards on mobile instead of cramped table */
+.cards{display:none; padding:10px 12px 14px; gap:10px}
+.item-card{
+  border:1px solid #f0e2e6; border-radius:16px; background:#fff; padding:12px; box-shadow:0 6px 16px rgba(91,48,63,.05)
+}
+.item-card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:8px}
+.item-card-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.item-card .full{grid-column:1 / -1}
+.field-label{display:block;margin:0 0 4px;color:var(--muted);font-size:.68rem;font-weight:800;letter-spacing:.07em;text-transform:uppercase}
+.item-card input,.item-card select{background:#faf7f8;border-color:#f0e4e8}
+
+@media (max-width:900px){
+  .dashboard{grid-template-columns:1fr}
+  .progress-card{grid-template-columns:1fr;gap:14px}
+}
+@media (max-width:720px){
+  .wrap{padding:14px 12px calc(36px + var(--safe-bottom))}
+  .hero{padding:24px 18px}
+  .hero-icons{display:none}
+  .budget-grid{grid-template-columns:1fr}
+  .budget-card{min-height:auto}
+  .toolbar .hint{width:100%}
+  .room-head{padding:16px 14px}
+  .table-wrap{display:none}
+  .cards{display:grid}
+  .mobile-hint{display:block}
+  .room-footer{padding:12px 14px 14px}
+  .summary-head{align-items:flex-start}
+  /* summary stays scrollable */
+  .summary-table{overflow-x:auto}
+  .summary-table table{min-width:640px}
+}
+@media (max-width:420px){
+  .item-card-grid{grid-template-columns:1fr}
+  .budget-title h2,.hero h1{letter-spacing:-.03em}
+}
+@media print{
+  body{background:#fff}
+  .wrap{max-width:none;padding:12px}
+  .hero,.panel,.summary,.info,.total,.budget-section{box-shadow:none;border:1px solid #ddd}
+  .toolbar,.tabs,.remove,.add-row,.mobile-hint{display:none!important}
+  .panel{display:block!important;margin:12px 0;break-inside:avoid}
+  .table-wrap{display:block!important;overflow:visible}
+  .cards{display:none!important}
+  .hero{color:#333;background:#fff}
+  .hero:after,.hero-icons{display:none}
+}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <section class="hero">
+    <p class="eyebrow">Planejador de compras • nosso futuro lar</p>
+    <h1>Morando juntos,<br>sonhando juntos.</h1>
+    <p>Um cantinho para transformar ideias, achadinhos e ofertas em planos para a casa de vocês.</p>
+    <div class="hero-icons">🏡 ✦ ♡</div>
+  </section>
+
+  <section class="dashboard">
+    <div class="info">
+      <b>Como funciona</b>
+      <p>Escolham um cômodo nas abas, guardem links e valores das ofertas. No celular, cada item vira um cartão fácil de preencher. O orçamento e o progresso atualizam sozinhos.</p>
+    </div>
+    <div class="total">
+      <span>Investimento estimado</span>
+      <strong id="grandTotal">R$&nbsp;0,00</strong>
+      <small><span id="itemCount">0</span> itens com valor preenchido</small>
+    </div>
+  </section>
+
+  <section class="budget-section" aria-label="Resumo do orçamento">
+    <div class="budget-title">
+      <div>
+        <p class="kicker">Visão do orçamento</p>
+        <h2>O caminho para morar juntos</h2>
+      </div>
+      <span class="budget-caption">Acompanhem os essenciais primeiro ✦</span>
+    </div>
+    <div class="budget-grid">
+      <article class="budget-card essential">
+        <span>Essenciais</span>
+        <strong id="essentialTotal">R$&nbsp;0,00</strong>
+        <small id="essentialCount">0 itens</small>
+      </article>
+      <article class="budget-card important">
+        <span>Importantes</span>
+        <strong id="importantTotal">R$&nbsp;0,00</strong>
+        <small id="importantCount">0 itens</small>
+      </article>
+      <article class="budget-card desire">
+        <span>Desejos</span>
+        <strong id="desireTotal">R$&nbsp;0,00</strong>
+        <small id="desireCount">0 itens</small>
+      </article>
+    </div>
+    <article class="progress-card">
+      <div class="progress-copy">
+        <span class="progress-label">Quanto falta para morar juntos</span>
+        <strong id="progressPercent">0%</strong>
+        <p id="progressText">Nenhum essencial marcado como comprado ainda.</p>
+      </div>
+      <div class="progress-visual">
+        <div class="progress-track"><i id="progressFill"></i></div>
+        <div class="progress-meta">
+          <span id="boughtEssential">0 de 0 essenciais comprados</span>
+          <b id="remainingEssential">Falta R$&nbsp;0,00</b>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <div class="toolbar">
+    <span class="hint">✦ Suas alterações ficam salvas neste navegador. No celular, a lista vira cartões.</span>
+    <button class="soft" id="clearData" type="button">Limpar dados</button>
+    <button class="primary" onclick="window.print()" type="button">Salvar em PDF</button>
+  </div>
+
+  <nav class="tabs" id="tabs" aria-label="Cômodos"></nav>
+  <p class="mobile-hint">No celular, deslize as abas e preencha cada item em cartões. Campos de prioridade e status aparecem completos.</p>
+  <section id="panels"></section>
+
+  <section class="summary">
+    <div class="summary-head">
+      <div>
+        <h2>Lista final de compras</h2>
+        <p>Todos os itens que vocês cadastraram, em um só lugar.</p>
+      </div>
+      <div class="summary-total" id="summaryTotal">R$&nbsp;0,00</div>
+    </div>
+    <div class="summary-table" id="summaryContent"></div>
+  </section>
+
+  <footer>Feito com carinho para o lar que vocês estão construindo ✨</footer>
+</main>
+
+<script>
+const rooms = [
+  {name:'Quarto do casal', icon:'🛏️', items:['Cama / colchão','Guarda-roupa','Criado-mudo','Cabeceira','Cortinas / persianas','Luminária','Jogo de cama']},
+  {name:'Quarto 2 — nosso espaço', icon:'🎮', items:['Mesa gamer / trabalho','Cadeira','TV / projetor','Sofá / puff','Espelho para pole','Tapete','Prateleiras / decoração']},
+  {name:'Banheiro', icon:'🫧', items:['Chuveiro','Gabinete / armário','Espelho','Lixeira','Tapete','Toalhas','Acessórios']},
+  {name:'Sala', icon:'🛋️', items:['Sofá','Rack / painel','TV','Mesa de centro','Tapete','Cortinas','Estante / decoração']},
+  {name:'Corredor', icon:'🖼️', items:['Espelho','Aparador','Quadros / decoração','Passadeira','Organizador']},
+  {name:'Cozinha', icon:'🍳', items:['Geladeira','Fogão / cooktop','Micro-ondas','Mesa e cadeiras','Armário','Air fryer','Panelas e utensílios','Louças / copos']},
+  {name:'Área de serviço', icon:'🧺', items:['Máquina de lavar','Varal','Cesto de roupa','Armário / prateleira','Tábua de passar','Ferro','Itens de limpeza']}
+];
+
+const key = 'nossoLarPlannerV3';
+let state = JSON.parse(localStorage.getItem(key) || '{}');
+let active = 0;
+const brl = new Intl.NumberFormat('pt-BR', {style:'currency', currency:'BRL'});
+
+function esc(s){
+  return String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+function selectOptions(field, value){
+  const options = field === 'priority'
+    ? ['Essencial','Importante','Desejo']
+    : ['Pesquisando','Achamos!','Comprado'];
+  return options.map(o => `<option value="${o}" ${value===o?'selected':''}>${o}</option>`).join('');
+}
+
+function rowHTML(data={}){
+  return `<tr>
+    <td><input class="item" data-field="item" value="${esc(data.item||'')}" placeholder="Nome do item"></td>
+    <td><input class="link" data-field="link" value="${esc(data.link||'')}" placeholder="Loja ou link"></td>
+    <td><input class="value money" inputmode="decimal" data-field="value" value="${esc(data.value||'')}" placeholder="R$ 0,00"></td>
+    <td><select class="priority" data-field="priority">${selectOptions('priority', data.priority||'Importante')}</select></td>
+    <td><select class="status" data-field="status">${selectOptions('status', data.status||'Pesquisando')}</select></td>
+    <td><input class="notes" data-field="notes" value="${esc(data.notes||'')}" placeholder="Observações"></td>
+    <td><button class="remove" type="button" title="Remover" aria-label="Remover item">×</button></td>
+  </tr>`;
+}
+
+function cardHTML(data={}){
+  return `<article class="item-card">
+    <div class="item-card-head">
+      <div class="full" style="flex:1">
+        <label class="field-label">Item</label>
+        <input class="item" data-field="item" value="${esc(data.item||'')}" placeholder="Nome do item">
+      </div>
+      <button class="remove" type="button" title="Remover" aria-label="Remover item">×</button>
+    </div>
+    <div class="item-card-grid">
+      <div class="full">
+        <label class="field-label">Loja / oferta</label>
+        <input class="link" data-field="link" value="${esc(data.link||'')}" placeholder="Loja ou link">
+      </div>
+      <div>
+        <label class="field-label">Valor</label>
+        <input class="value money" inputmode="decimal" data-field="value" value="${esc(data.value||'')}" placeholder="R$ 0,00">
+      </div>
+      <div>
+        <label class="field-label">Prioridade</label>
+        <select class="priority" data-field="priority">${selectOptions('priority', data.priority||'Importante')}</select>
+      </div>
+      <div>
+        <label class="field-label">Status</label>
+        <select class="status" data-field="status">${selectOptions('status', data.status||'Pesquisando')}</select>
+      </div>
+      <div class="full">
+        <label class="field-label">Observações</label>
+        <input class="notes" data-field="notes" value="${esc(data.notes||'')}" placeholder="Observações">
+      </div>
+    </div>
+  </article>`;
+}
+
+function defaultList(room){
+  return room.items.map(item => ({item, priority:'Importante', status:'Pesquisando'}));
+}
+
+function build(){
+  document.getElementById('tabs').innerHTML = rooms.map((r,i) =>
+    `<button class="tab ${i===active?'active':''}" data-tab="${i}" type="button"><span class="tab-icon">${r.icon}</span>${r.name}</button>`
+  ).join('');
+
+  document.getElementById('panels').innerHTML = rooms.map((r,i) => {
+    const list = (state[i] && state[i].length) ? state[i] : defaultList(r);
+    return `<article class="panel ${i===active?'active':''}" data-room="${i}">
+      <header class="room-head">
+        <div class="room-title"><span class="icon">${r.icon}</span><h2>${r.name}</h2></div>
+        <span class="room-count">${list.length} item(ns)</span>
+      </header>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Item</th><th>Loja / oferta</th><th>Valor</th>
+              <th>Prioridade</th><th>Status</th><th>Observações</th><th></th>
+            </tr>
+          </thead>
+          <tbody>${list.map(rowHTML).join('')}</tbody>
+        </table>
+      </div>
+      <div class="cards">${list.map(cardHTML).join('')}</div>
+      <footer class="room-footer">
+        <button class="add-row" type="button">＋ Adicionar item</button>
+        <span class="subtotal">Subtotal: <b>R$&nbsp;0,00</b></span>
+      </footer>
+    </article>`;
+  }).join('');
+
+  bind();
+  recalc();
+}
+
+function valNum(s){
+  let x = String(s||'').replace(/[^0-9,.-]/g,'').replace(/\./g,'').replace(',','.');
+  return parseFloat(x) || 0;
+}
+
+function formatMoney(input){
+  if(input.value.trim()) input.value = brl.format(valNum(input.value));
+}
+
+function readBlocks(panel){
+  // Prefer visible structure; on desktop tbody rows, on mobile cards
+  const tableBlocks = [...panel.querySelectorAll('tbody tr')];
+  const cardBlocks = [...panel.querySelectorAll('.item-card')];
+  // Both views exist; use table as source of truth for count after desktop edits,
+  // but when user is on mobile they edit cards. Keep them synced on input.
+  // For persistence we always gather from both carefully: if cards exist, combine by index using cards if mobile.
+  // Safer: always read table rows as primary state, and ensure cards are regenerated from state on rebuild.
+  // To support both without desync, on every input we write from the changed element into both views? Simpler approach:
+  // Read from whichever is currently edited, but store unified list by matching field values from table if table display not none.
+  const useCards = window.getComputedStyle(panel.querySelector('.cards')).display !== 'none';
+  const blocks = useCards ? cardBlocks : tableBlocks;
+  return blocks.map(block => Object.fromEntries(
+    [...block.querySelectorAll('[data-field]')].map(el => [el.dataset.field, el.value])
+  ));
+}
+
+function persist(){
+  state = {};
+  document.querySelectorAll('.panel').forEach(p => {
+    state[p.dataset.room] = readBlocks(p);
+  });
+  localStorage.setItem(key, JSON.stringify(state));
+}
+
+function syncTwinViews(panel){
+  // Keep table and cards in sync after edits by rewriting both from current readBlocks
+  const list = readBlocks(panel);
+  const tbody = panel.querySelector('tbody');
+  const cards = panel.querySelector('.cards');
+  // preserve focus field if possible
+  const activeEl = document.activeElement;
+  const activeField = activeEl && activeEl.dataset ? activeEl.dataset.field : null;
+  const activeBlock = activeEl ? activeEl.closest('tr, .item-card') : null;
+  let activeIndex = -1;
+  if(activeBlock){
+    const siblings = activeBlock.classList.contains('item-card')
+      ? [...panel.querySelectorAll('.item-card')]
+      : [...panel.querySelectorAll('tbody tr')];
+    activeIndex = siblings.indexOf(activeBlock);
+  }
+  tbody.innerHTML = list.map(rowHTML).join('');
+  cards.innerHTML = list.map(cardHTML).join('');
+  // restore focus
+  if(activeIndex >= 0 && activeField){
+    const view = window.getComputedStyle(cards).display !== 'none' ? cards : tbody;
+    const blocks = window.getComputedStyle(cards).display !== 'none'
+      ? [...cards.querySelectorAll('.item-card')]
+      : [...tbody.querySelectorAll('tr')];
+    const target = blocks[activeIndex]?.querySelector(`[data-field="${activeField}"]`);
+    if(target){
+      target.focus();
+      if(typeof target.selectionStart === 'number'){
+        const len = target.value.length;
+        try { target.setSelectionRange(len,len); } catch(e){}
+      }
+    }
+  }
+  bindPanel(panel);
+}
+
+function collectAll(){
+  let total=0, count=0, all=[];
+  const totals = {Essencial:0, Importante:0, Desejo:0};
+  const counts = {Essencial:0, Importante:0, Desejo:0};
+  let essentialTotal=0, boughtEssential=0, boughtEssentialValue=0;
+
+  document.querySelectorAll('.panel').forEach(p => {
+    let sub=0;
+    const ri = +p.dataset.room;
+    const list = readBlocks(p);
+    list.forEach(d => {
+      const n = valNum(d.value);
+      const priority = totals[d.priority] !== undefined ? d.priority : 'Importante';
+      if(n > 0){
+        sub += n;
+        count++;
+        totals[priority] += n;
+      }
+      if((d.item||'').trim()){
+        counts[priority]++;
+        all.push({...d, room: rooms[ri]});
+        if(priority === 'Essencial'){
+          essentialTotal += n;
+          if(d.status === 'Comprado'){
+            boughtEssential++;
+            boughtEssentialValue += n;
+          }
+        }
+      }
+    });
+    p.querySelector('.subtotal b').textContent = brl.format(sub);
+    p.querySelector('.room-count').textContent = list.length + ' item(ns)';
+    total += sub;
+  });
+
+  document.getElementById('grandTotal').textContent = brl.format(total);
+  document.getElementById('summaryTotal').textContent = brl.format(total);
+  document.getElementById('itemCount').textContent = count;
+  document.getElementById('essentialTotal').textContent = brl.format(totals.Essencial);
+  document.getElementById('importantTotal').textContent = brl.format(totals.Importante);
+  document.getElementById('desireTotal').textContent = brl.format(totals.Desejo);
+  document.getElementById('essentialCount').textContent = counts.Essencial + ' item(ns)';
+  document.getElementById('importantCount').textContent = counts.Importante + ' item(ns)';
+  document.getElementById('desireCount').textContent = counts.Desejo + ' item(ns)';
+
+  const pct = counts.Essencial ? Math.round((boughtEssential / counts.Essencial) * 100) : 0;
+  const remaining = Math.max(0, essentialTotal - boughtEssentialValue);
+  document.getElementById('progressPercent').textContent = pct + '%';
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('boughtEssential').textContent = boughtEssential + ' de ' + counts.Essencial + ' essenciais comprados';
+  document.getElementById('remainingEssential').textContent = 'Falta ' + brl.format(remaining);
+  document.getElementById('progressText').textContent = counts.Essencial
+    ? (pct === 100
+        ? 'Tudo pronto no essencial — vocês estão prontos para morar juntos! ♡'
+        : 'Cada essencial comprado deixa o novo lar mais perto.')
+    : 'Marquem itens como “Essencial” e status “Comprado” para acompanhar o progresso.';
+
+  renderSummary(all);
+  persist();
+}
+
+function recalc(){ collectAll(); }
+
+function renderSummary(all){
+  const el = document.getElementById('summaryContent');
+  if(!all.length){
+    el.innerHTML = '<div class="empty">Adicionem itens aos cômodos para vê-los aqui. ♡</div>';
+    return;
+  }
+  el.innerHTML = `<div class="table-wrap" style="display:block;padding:0">
+    <table>
+      <thead>
+        <tr>
+          <th>Cômodo</th><th>Item</th><th>Loja / oferta</th><th>Valor</th><th>Prioridade</th><th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${all.map(x => `<tr>
+          <td><span class="room-pill">${x.room.icon} ${esc(x.room.name)}</span></td>
+          <td><b>${esc(x.item)}</b></td>
+          <td>${x.link ? `<a href="${esc(x.link)}" target="_blank" rel="noopener" style="color:#9c5d70;word-break:break-all">${esc(x.link)}</a>` : '—'}</td>
+          <td>${x.value ? brl.format(valNum(x.value)) : '—'}</td>
+          <td>${esc(x.priority||'—')}</td>
+          <td>${esc(x.status||'—')}</td>
+        </tr>`).join('')}
+      </tbody>
+    </table>
+  </div>`;
+}
+
+function bindPanel(panel){
+  panel.querySelectorAll('.remove').forEach(btn => {
+    btn.onclick = () => {
+      const block = btn.closest('tr, .item-card');
+      const list = readBlocks(panel);
+      const siblings = block.classList.contains('item-card')
+        ? [...panel.querySelectorAll('.item-card')]
+        : [...panel.querySelectorAll('tbody tr')];
+      const idx = siblings.indexOf(block);
+      if(idx >= 0) list.splice(idx,1);
+      // write both views from remaining list
+      panel.querySelector('tbody').innerHTML = list.map(rowHTML).join('');
+      panel.querySelector('.cards').innerHTML = list.map(cardHTML).join('');
+      bindPanel(panel);
+      collectAll();
+    };
+  });
+
+  panel.querySelectorAll('input,select').forEach(el => {
+    el.oninput = () => {
+      // lightweight: update twin field with same index+field when possible
+      const block = el.closest('tr, .item-card');
+      if(!block) return collectAll();
+      const isCard = block.classList.contains('item-card');
+      const siblings = isCard
+        ? [...panel.querySelectorAll('.item-card')]
+        : [...panel.querySelectorAll('tbody tr')];
+      const idx = siblings.indexOf(block);
+      const twinRoot = isCard
+        ? panel.querySelectorAll('tbody tr')[idx]
+        : panel.querySelectorAll('.item-card')[idx];
+      if(twinRoot){
+        const twin = twinRoot.querySelector(`[data-field="${el.dataset.field}"]`);
+        if(twin && twin !== el) twin.value = el.value;
+      }
+      collectAll();
+    };
+    el.onchange = () => {
+      if(el.classList.contains('money')) formatMoney(el);
+      // format twin too
+      const block = el.closest('tr, .item-card');
+      if(block){
+        const isCard = block.classList.contains('item-card');
+        const siblings = isCard ? [...panel.querySelectorAll('.item-card')] : [...panel.querySelectorAll('tbody tr')];
+        const idx = siblings.indexOf(block);
+        const twinRoot = isCard ? panel.querySelectorAll('tbody tr')[idx] : panel.querySelectorAll('.item-card')[idx];
+        if(twinRoot){
+          const twin = twinRoot.querySelector(`[data-field="${el.dataset.field}"]`);
+          if(twin && twin !== el){
+            twin.value = el.value;
+          }
+        }
+      }
+      collectAll();
+    };
+    el.onblur = () => {
+      if(el.classList.contains('money')){
+        formatMoney(el);
+        el.onchange();
+      }
+    };
+  });
+}
+
+function bind(){
+  document.querySelectorAll('.tab').forEach(btn => {
+    btn.onclick = () => {
+      active = +btn.dataset.tab;
+      // do not rebuild everything from scratch if avoidable; save then rebuild for simplicity
+      persist();
+      build();
+      const tabs = document.querySelector('.tabs');
+      window.scrollTo({top: tabs.getBoundingClientRect().top + scrollY - 10, behavior:'smooth'});
+    };
+  });
+
+  document.querySelectorAll('.panel').forEach(panel => {
+    panel.querySelector('.add-row').onclick = () => {
+      const list = readBlocks(panel);
+      list.push({item:'', priority:'Importante', status:'Pesquisando'});
+      panel.querySelector('tbody').innerHTML = list.map(rowHTML).join('');
+      panel.querySelector('.cards').innerHTML = list.map(cardHTML).join('');
+      bindPanel(panel);
+      collectAll();
+    };
+    bindPanel(panel);
+  });
+}
+
+document.getElementById('clearData').onclick = () => {
+  if(confirm('Limpar todos os dados salvos?')){
+    localStorage.removeItem(key);
+    state = {};
+    build();
+  }
+};
+
+// migrate old V2 data if present and V3 empty
+(function migrate(){
+  if(Object.keys(state).length) return;
+  try{
+    const old = JSON.parse(localStorage.getItem('nossoLarPlannerV2')||'{}');
+    if(old && Object.keys(old).length){
+      state = old;
+      localStorage.setItem(key, JSON.stringify(state));
+    }
+  }catch(e){}
+})();
+
+build();
+</script>
+</body>
+</html>
