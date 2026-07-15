@@ -39,7 +39,7 @@ body{
 .auth-text b{display:block;color:var(--wine);font-size:.88rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:330px}
 .auth-text span{display:block;color:var(--muted);font-size:.76rem;margin-top:2px}
 .auth-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-.google-btn{display:inline-flex;align-items:center;gap:8px;background:#fff;color:#4e4248;border:1px solid #ded6da}
+.google-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:#fff;color:#4e4248;border:1px solid #ded6da}
 .google-g{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;font-weight:850;font-family:Arial,sans-serif;color:#4285f4;font-size:1.05rem}
 .sync-badge{display:inline-flex;align-items:center;gap:6px;color:#6e5e67;font-size:.78rem;white-space:nowrap}
 .sync-dot{width:8px;height:8px;border-radius:50%;background:#a8a0a4}
@@ -67,8 +67,17 @@ body{
 .error-banner b{display:block; margin-bottom:4px}
 .error-banner code{font-size:.78rem; background:#ffe7ec; padding:1px 5px; border-radius:6px; word-break:break-word}
 
-.auth-overlay{position:fixed;inset:0;z-index:999;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(60,35,45,.54);backdrop-filter:blur(7px)}
-.auth-overlay[hidden]{display:none !important;}
+/* Overlay de login — obrigatório esconder de verdade */
+.auth-overlay{
+  position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;
+  padding:20px;background:rgba(60,35,45,.54);backdrop-filter:blur(7px);
+}
+.auth-overlay[hidden],
+.auth-overlay.is-hidden{
+  display:none !important;
+  visibility:hidden !important;
+  pointer-events:none !important;
+}
 .auth-dialog{width:min(430px,100%);padding:30px 25px;border-radius:24px;text-align:center;background:#fffdfd;box-shadow:0 22px 70px rgba(47,22,31,.3)}
 .auth-dialog .house{font-size:3rem}
 .auth-dialog h2{margin:10px 0 8px;color:var(--wine);font:700 2rem Georgia,serif}
@@ -111,6 +120,7 @@ body{
 .toolbar .hint{color:var(--muted);font-size:.86rem;margin-right:auto;line-height:1.35}
 button{border:0; font:700 .88rem Inter,ui-sans-serif,system-ui,sans-serif; cursor:pointer; transition:.18s transform,.18s box-shadow; border-radius:11px; padding:11px 14px; min-height:42px}
 button:hover{transform:translateY(-1px)}
+button:disabled{opacity:.65;cursor:wait;transform:none}
 .soft{background:#fff;border:1px solid var(--line);color:#6d5260}
 .primary{background:var(--wine);color:#fff;box-shadow:0 8px 17px rgba(100,56,71,.2)}
 .tabs{display:flex; gap:8px; overflow-x:auto; padding:6px 2px 12px; margin:0 -2px 2px; scrollbar-width:thin; -webkit-overflow-scrolling:touch; scroll-snap-type:x proximity}
@@ -126,17 +136,25 @@ button:hover{transform:translateY(-1px)}
 .room-title h2{margin:0;color:var(--wine);font:700 clamp(1.2rem,4vw,1.55rem) Georgia,serif}
 .room-count{font-size:.78rem;color:var(--muted);background:#fff;border:1px solid var(--line);border-radius:999px;padding:6px 10px;white-space:nowrap}
 .table-wrap{overflow-x:auto;padding:12px 12px 4px; -webkit-overflow-scrolling:touch}
-table{width:100%;min-width:900px;border-collapse:collapse}
+table{width:100%;min-width:980px;border-collapse:collapse}
 th{padding:10px 8px; text-align:left; color:var(--muted); font-size:.68rem; letter-spacing:.07em; text-transform:uppercase; white-space:nowrap}
 td{padding:6px 5px;border-top:1px solid #f2e9ec;vertical-align:middle}
 input,select{width:100%; min-height:44px; padding:10px 12px; border:1px solid transparent; border-radius:10px; background:transparent; color:var(--ink); font:inherit; outline:none; appearance:auto}
-select{min-width:148px; padding-right:32px; white-space:nowrap; overflow:visible; text-overflow:clip; background-color:rgba(255,255,255,.55)}
+/* IMPORTANTE: largura suficiente para "Importante" e "Pesquisando" */
+select{
+  min-width:168px;
+  padding-right:34px;
+  white-space:nowrap;
+  overflow:visible;
+  text-overflow:clip;
+  background-color:rgba(255,255,255,.55);
+}
 input:hover,select:hover{background:#fff;border-color:#eee0e5}
 input:focus,select:focus{background:#fff;border-color:#d9849a;box-shadow:0 0 0 3px rgba(215,123,145,.13)}
 .item{min-width:150px;font-weight:700}
 .link{min-width:140px;color:#946476}
 .value{min-width:118px;text-align:right;font-variant-numeric:tabular-nums}
-.priority,.status{min-width:148px}
+.priority,.status{min-width:168px;width:168px}
 .notes{min-width:140px}
 .remove{width:40px;height:40px;min-height:40px;padding:0;color:#ad6275;background:#fff0f3;font-size:1.2rem}
 .room-footer{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:14px 16px 16px;border-top:1px solid #f4eaed}
@@ -163,8 +181,8 @@ footer{text-align:center;color:var(--muted);font-size:.84rem;margin-top:22px;lin
 .item-card input,.item-card select{background:#faf7f8;border-color:#f0e4e8}
 .item-card select{min-width:0; width:100%}
 
-@media (max-width:900px){.dashboard{grid-template-columns:1fr}.progress-card{grid-template-columns:1fr;gap:14px}}
-@media (max-width:720px){
+@media(max-width:900px){.dashboard{grid-template-columns:1fr}.progress-card{grid-template-columns:1fr;gap:14px}}
+@media(max-width:720px){
   .wrap{padding:14px 12px calc(36px + var(--safe-bottom))}
   .hero{padding:24px 18px}
   .hero-icons{display:none}
@@ -180,7 +198,7 @@ footer{text-align:center;color:var(--muted);font-size:.84rem;margin-top:22px;lin
   .invite-link input{max-width:150px}
   .summary-table{overflow-x:auto}
 }
-@media (max-width:420px){.item-card-grid{grid-template-columns:1fr}}
+@media(max-width:420px){.item-card-grid{grid-template-columns:1fr}}
 @media print{
   body{background:#fff}.wrap{max-width:none;padding:12px}
   .hero,.panel,.summary,.info,.total,.budget-section,.household-bar{box-shadow:none;border:1px solid #ddd}
@@ -242,7 +260,7 @@ footer{text-align:center;color:var(--muted);font-size:.84rem;margin-top:22px;lin
     </div>
     <div class="total">
       <span>Investimento estimado</span>
-      <strong id="grandTotal">R$ 0,00</strong>
+      <strong id="grandTotal">R$&nbsp;0,00</strong>
       <small><span id="itemCount">0</span> itens com valor preenchido</small>
     </div>
   </section>
@@ -256,9 +274,9 @@ footer{text-align:center;color:var(--muted);font-size:.84rem;margin-top:22px;lin
       <span class="budget-caption">Acompanhem os essenciais primeiro ✦</span>
     </div>
     <div class="budget-grid">
-      <article class="budget-card essential"><span>Essenciais</span><strong id="essentialTotal">R$ 0,00</strong><small id="essentialCount">0 itens</small></article>
-      <article class="budget-card important"><span>Importantes</span><strong id="importantTotal">R$ 0,00</strong><small id="importantCount">0 itens</small></article>
-      <article class="budget-card desire"><span>Desejos</span><strong id="desireTotal">R$ 0,00</strong><small id="desireCount">0 itens</small></article>
+      <article class="budget-card essential"><span>Essenciais</span><strong id="essentialTotal">R$&nbsp;0,00</strong><small id="essentialCount">0 itens</small></article>
+      <article class="budget-card important"><span>Importantes</span><strong id="importantTotal">R$&nbsp;0,00</strong><small id="importantCount">0 itens</small></article>
+      <article class="budget-card desire"><span>Desejos</span><strong id="desireTotal">R$&nbsp;0,00</strong><small id="desireCount">0 itens</small></article>
     </div>
     <article class="progress-card">
       <div class="progress-copy">
@@ -270,7 +288,7 @@ footer{text-align:center;color:var(--muted);font-size:.84rem;margin-top:22px;lin
         <div class="progress-track"><i id="progressFill"></i></div>
         <div class="progress-meta">
           <span id="boughtEssential">0 de 0 essenciais comprados</span>
-          <b id="remainingEssential">Falta R$ 0,00</b>
+          <b id="remainingEssential">Falta R$&nbsp;0,00</b>
         </div>
       </div>
     </article>
@@ -292,7 +310,7 @@ footer{text-align:center;color:var(--muted);font-size:.84rem;margin-top:22px;lin
         <h2>Lista final de compras</h2>
         <p>Todos os itens que vocês cadastraram, em um só lugar.</p>
       </div>
-      <div class="summary-total" id="summaryTotal">R$ 0,00</div>
+      <div class="summary-total" id="summaryTotal">R$&nbsp;0,00</div>
     </div>
     <div class="summary-table" id="summaryContent"></div>
   </section>
@@ -306,14 +324,24 @@ footer{text-align:center;color:var(--muted);font-size:.84rem;margin-top:22px;lin
     <h2 id="authTitle">O lar de vocês, sincronizado</h2>
     <p id="authDialogText">Entrem com uma conta Google para criar (ou entrar em) o lar compartilhado e planejar tudo juntos, em tempo real.</p>
     <button class="google-btn" id="overlayLoginBtn" type="button"><span class="google-g">G</span>Continuar com Google</button>
-    <small>Vocês serão redirecionados para o Google e voltarão logados automaticamente.</small>
+    <small id="authHint">Se o pop-up for bloqueado, o site redireciona para o Google e volta sozinho.</small>
   </section>
 </div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getAuth, GoogleAuthProvider, signInWithRedirect, signOut, onAuthStateChanged, getRedirectResult } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { getDatabase, ref, set, get, update, push, remove, onValue, off, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+import {
+  getAuth,
+  GoogleAuthProvider,
+  signInWithPopup,
+  signInWithRedirect,
+  getRedirectResult,
+  signOut,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import {
+  getDatabase, ref, set, get, update, push, remove, onValue, off, serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCRG1zdkBnvKX9zSouv4kGOWArwhZHgcNU",
@@ -329,16 +357,16 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const database = getDatabase(app);
 const googleProvider = new GoogleAuthProvider();
-googleProvider.setCustomParameters({ prompt: 'select_account' });
+googleProvider.setCustomParameters({ prompt: "select_account" });
 
 const rooms = [
-  {name:'Quarto do casal', icon:'🛏️', items:['Cama / colchão','Guarda-roupa','Criado-mudo','Cabeceira','Cortinas / persianas','Luminária','Jogo de cama']},
-  {name:'Quarto 2 — nosso espaço', icon:'🎮', items:['Mesa gamer / trabalho','Cadeira','TV / projetor','Sofá / puff','Espelho para pole','Tapete','Prateleiras / decoração']},
-  {name:'Banheiro', icon:'🫧', items:['Chuveiro','Gabinete / armário','Espelho','Lixeira','Tapete','Toalhas','Acessórios']},
-  {name:'Sala', icon:'🛋️', items:['Sofá','Rack / painel','TV','Mesa de centro','Tapete','Cortinas','Estante / decoração']},
-  {name:'Corredor', icon:'🖼️', items:['Espelho','Aparador','Quadros / decoração','Passadeira','Organizador']},
-  {name:'Cozinha', icon:'🍳', items:['Geladeira','Fogão / cooktop','Micro-ondas','Mesa e cadeiras','Armário','Air fryer','Panelas e utensílios','Louças / copos']},
-  {name:'Área de serviço', icon:'🧺', items:['Máquina de lavar','Varal','Cesto de roupa','Armário / prateleira','Tábua de passar','Ferro','Itens de limpeza']}
+  {name:"Quarto do casal", icon:"🛏️", items:["Cama / colchão","Guarda-roupa","Criado-mudo","Cabeceira","Cortinas / persianas","Luminária","Jogo de cama"]},
+  {name:"Quarto 2 — nosso espaço", icon:"🎮", items:["Mesa gamer / trabalho","Cadeira","TV / projetor","Sofá / puff","Espelho para pole","Tapete","Prateleiras / decoração"]},
+  {name:"Banheiro", icon:"🫧", items:["Chuveiro","Gabinete / armário","Espelho","Lixeira","Tapete","Toalhas","Acessórios"]},
+  {name:"Sala", icon:"🛋️", items:["Sofá","Rack / painel","TV","Mesa de centro","Tapete","Cortinas","Estante / decoração"]},
+  {name:"Corredor", icon:"🖼️", items:["Espelho","Aparador","Quadros / decoração","Passadeira","Organizador"]},
+  {name:"Cozinha", icon:"🍳", items:["Geladeira","Fogão / cooktop","Micro-ondas","Mesa e cadeiras","Armário","Air fryer","Panelas e utensílios","Louças / copos"]},
+  {name:"Área de serviço", icon:"🧺", items:["Máquina de lavar","Varal","Cesto de roupa","Armário / prateleira","Tábua de passar","Ferro","Itens de limpeza"]}
 ];
 
 let state = {};
@@ -352,268 +380,459 @@ let membersListener = null;
 let loadedFromFirebase = false;
 let saveTimer = null;
 let applyingRemote = false;
-const brl = new Intl.NumberFormat('pt-BR', {style:'currency', currency:'BRL'});
+let loginBusy = false;
+const brl = new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" });
+const $ = (s) => document.querySelector(s);
 
-const $ = s => document.querySelector(s);
-function esc(s){ return String(s ?? '').replace(/[&<>"']/g,c=>({'&':'&','<':'<','>':'>','"':'"',"'":'''}[c])); }
+function esc(s){
+  return String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
 
 function getInviteHomeFromUrl(){
   const params = new URLSearchParams(location.search);
-  return params.get('lar') || params.get('home');
+  return params.get("lar") || params.get("home");
 }
 function cleanUrl(){
   const url = new URL(location.href);
-  url.searchParams.delete('lar');
-  url.searchParams.delete('home');
-  history.replaceState({}, '', url.pathname + (url.search ? url.search : '') + url.hash);
+  url.searchParams.delete("lar");
+  url.searchParams.delete("home");
+  history.replaceState({}, "", url.pathname + (url.search || "") + url.hash);
 }
 function inviteUrlFor(id){
   const url = new URL(location.href);
-  url.search = '';
-  url.hash = '';
-  url.searchParams.set('lar', id);
+  url.search = "";
+  url.hash = "";
+  url.searchParams.set("lar", id);
   return url.toString();
 }
 function setSync(status, message){
-  const badge = $('#syncBadge'); badge.className = 'sync-badge ' + status; $('#syncText').textContent = message;
+  const badge = $("#syncBadge");
+  if (!badge) return;
+  badge.className = "sync-badge " + status;
+  $("#syncText").textContent = message;
 }
 function showError(message){
-  const banner = $('#errorBanner');
-  $('#errorBannerText').innerHTML = message;
-  banner.classList.add('show');
+  $("#errorBannerText").innerHTML = message;
+  $("#errorBanner").classList.add("show");
 }
-function hideError(){ $('#errorBanner').classList.remove('show'); }
+function hideError(){
+  $("#errorBanner").classList.remove("show");
+}
 function permissionHelp(){
   return `Isso quase sempre é configuração das <b>regras do Realtime Database</b>, não do login Google.<br>
-  No Firebase Console → <b>Realtime Database → Rules</b>, cole as regras abaixo e clique em <b>Publicar</b>.<br><br>
-  <code style="display:block;white-space:pre;text-align:left;padding:10px;overflow:auto">{
-  "rules": {
-    "users": {
-      "$uid": {
-        ".read": "auth != null && auth.uid == $uid",
-        ".write": "auth != null && auth.uid == $uid"
-      }
-    },
-    "households": {
-      "$homeId": {
-        ".read": "auth != null && data.child('members').child(auth.uid).exists()",
-        "owner": { ".write": "auth != null && (!data.exists() || root.child('households').child($homeId).child('members').child(auth.uid).exists())" },
-        "createdAt": { ".write": "auth != null" },
-        "members": {
-          "$memberId": {
-            ".write": "auth != null && auth.uid == $memberId"
-          }
-        },
-        "rooms": {
-          ".write": "auth != null && root.child('households').child($homeId).child('members').child(auth.uid).exists()"
-        }
-      }
-    }
-  }</code>
-  <br>Atalho para liberar tudo enquanto testa (usuário autenticado):
+  No Firebase Console → <b>Realtime Database → Rules</b>, publique regras que permitam usuário autenticado. Atalho de teste:<br>
   <code style="display:block;white-space:pre;text-align:left;padding:10px;overflow:auto">{
   "rules": { ".read": "auth != null", ".write": "auth != null" }</code>`;
 }
+
+function hideAuthOverlay(){
+  const el = $("#authOverlay");
+  if (!el) return;
+  el.hidden = true;
+  el.classList.add("is-hidden");
+  el.setAttribute("aria-hidden", "true");
+  el.style.display = "none";
+}
+function showAuthOverlay(){
+  const el = $("#authOverlay");
+  if (!el) return;
+  el.hidden = false;
+  el.classList.remove("is-hidden");
+  el.setAttribute("aria-hidden", "false");
+  el.style.display = "flex";
+}
+
 function setAuthUI(user){
   const logged = !!user;
-  $('#authOverlay').hidden = logged;
-  $('#loginBtn').hidden = logged;
-  $('#logoutBtn').hidden = !logged;
-  const avatar = $('#authAvatar');
-  if(logged){
-    $('#authName').textContent = user.displayName || 'Conta Google conectada';
-    $('#authEmail').textContent = user.email || 'Planejamento sincronizado na nuvem';
-    if(user.photoURL){ avatar.src = user.photoURL; avatar.hidden = false; } else avatar.hidden = true;
+  if (logged) hideAuthOverlay();
+  else showAuthOverlay();
+
+  $("#loginBtn").hidden = logged;
+  $("#logoutBtn").hidden = !logged;
+
+  const avatar = $("#authAvatar");
+  if (logged) {
+    $("#authName").textContent = user.displayName || "Conta Google conectada";
+    $("#authEmail").textContent = user.email || "Planejamento sincronizado na nuvem";
+    if (user.photoURL) {
+      avatar.src = user.photoURL;
+      avatar.hidden = false;
+    } else {
+      avatar.hidden = true;
+    }
   } else {
     avatar.hidden = true;
-    $('#authName').textContent = 'Conecte sua conta do Google';
-    $('#authEmail').textContent = 'Para salvar e sincronizar o planejamento de vocês.';
-  }
-}
-function setHouseholdUI(id){
-  const bar = $('#householdBar');
-  if(!id){ bar.hidden = true; return; }
-  bar.hidden = false;
-  $('#inviteInput').value = inviteUrlFor(id);
-}
-function renderMembers(members){
-  const wrap = $('#membersPills');
-  if(!members){ wrap.innerHTML=''; return; }
-  const list = Object.values(members);
-  wrap.innerHTML = list.map(m => `<span class="member-pill">${m.photoURL ? `<img src="${esc(m.photoURL)}" alt="">` : '👤'} ${esc(m.name || m.email || 'Alguém')}</span>`).join('');
-  const count = list.length;
-  $('#householdSubtitle').textContent = count > 1
-    ? `${count} pessoas neste lar — alterações sincronizam em tempo real.`
-    : 'Compartilhem o link abaixo para o outro entrar no mesmo lar.';
-}
-function memberPayload(user){
-  return {
-    name: user.displayName || '',
-    email: user.email || '',
-    photoURL: user.photoURL || '',
-    joinedAt: serverTimestamp()
-  };
-}
-async function login(){
-  try{
-    setSync('saving','Redirecionando para o Google…');
-    await signInWithRedirect(auth, googleProvider);
-  }catch(error){
-    console.error(error);
-    setSync('error', 'Não foi possível redirecionar');
-    alert('Erro ao redirecionar para o Google. Tente novamente.');
+    $("#authName").textContent = "Conecte sua conta do Google";
+    $("#authEmail").textContent = "Para salvar e sincronizar o planejamento de vocês.";
   }
 }
 
-function defaultList(room){ return room.items.map(item => ({item, priority:'Importante', status:'Pesquisando'})); }
-function selectOptions(field, value){
-  const options = field === 'priority' ? ['Essencial','Importante','Desejo'] : ['Pesquisando','Achamos!','Comprado'];
-  return options.map(o => `<option value="${o}" ${value===o?'selected':''}>${o}</option>`).join('');
+function setHouseholdUI(id){
+  const bar = $("#householdBar");
+  if (!id) { bar.hidden = true; return; }
+  bar.hidden = false;
+  $("#inviteInput").value = inviteUrlFor(id);
 }
-function rowHTML(data={}){
+function renderMembers(members){
+  const wrap = $("#membersPills");
+  if (!members) { wrap.innerHTML = ""; return; }
+  const list = Object.values(members);
+  wrap.innerHTML = list.map(m =>
+    `<span class="member-pill">${m.photoURL ? `<img src="${esc(m.photoURL)}" alt="">` : "👤"} ${esc(m.name || m.email || "Alguém")}</span>`
+  ).join("");
+  const count = list.length;
+  $("#householdSubtitle").textContent = count > 1
+    ? `${count} pessoas neste lar — alterações sincronizam em tempo real.`
+    : "Compartilhem o link abaixo para o outro entrar no mesmo lar.";
+}
+function memberPayload(user){
+  return {
+    name: user.displayName || "",
+    email: user.email || "",
+    photoURL: user.photoURL || "",
+    joinedAt: serverTimestamp()
+  };
+}
+
+function setLoginButtonsBusy(busy){
+  loginBusy = busy;
+  ["#loginBtn", "#overlayLoginBtn"].forEach(sel => {
+    const btn = $(sel);
+    if (!btn) return;
+    btn.disabled = busy;
+  });
+}
+
+async function login(){
+  if (loginBusy) return;
+  setLoginButtonsBusy(true);
+  setSync("saving", "Abrindo Google…");
+  $("#authHint").textContent = "Abrindo a tela do Google…";
+
+  try {
+    // 1) tenta popup (melhor no desktop)
+    await signInWithPopup(auth, googleProvider);
+    setSync("saved", "Login ok");
+  } catch (error) {
+    console.error("Login popup error:", error);
+    const code = error?.code || "";
+
+    // se o usuário cancelou, não força redirect
+    if (code === "auth/popup-closed-by-user" || code === "auth/cancelled-popup-request") {
+      setSync("error", "Login cancelado");
+      $("#authHint").textContent = "Login cancelado. Clique de novo para tentar.";
+      setLoginButtonsBusy(false);
+      return;
+    }
+
+    // 2) se popup bloqueado / problemas de pop-up → redirect
+    if (
+      code === "auth/popup-blocked" ||
+      code === "auth/operation-not-supported-in-this-environment" ||
+      code === "auth/unauthorized-domain" ||
+      code === "auth/internal-error"
+    ) {
+      try {
+        setSync("saving", "Redirecionando…");
+        $("#authHint").textContent = "Redirecionando para o Google…";
+        await signInWithRedirect(auth, googleProvider);
+        return; // a página vai sair
+      } catch (redirectError) {
+        console.error("Redirect error:", redirectError);
+        setSync("error", "Erro no login");
+        showError(`Erro de autenticação: <code>${esc(redirectError.code || redirectError.message)}</code><br>
+        Confira se o domínio do site está em <b>Authentication → Settings → Authorized domains</b> (ex.: ique96.github.io).`);
+      }
+    } else {
+      setSync("error", "Erro no login");
+      showError(`Erro de autenticação: <code>${esc(code || error.message)}</code><br>
+      Domínio autorizado no Firebase? Provedor Google ativo?`);
+    }
+  } finally {
+    setLoginButtonsBusy(false);
+  }
+}
+
+function defaultList(room){
+  return room.items.map(item => ({ item, priority: "Importante", status: "Pesquisando" }));
+}
+function selectOptions(field, value){
+  const options = field === "priority"
+    ? ["Essencial", "Importante", "Desejo"]
+    : ["Pesquisando", "Achamos!", "Comprado"];
+  return options.map(o => `<option value="${o}" ${value === o ? "selected" : ""}>${o}</option>`).join("");
+}
+function rowHTML(data = {}){
   return `<tr>
-    <td><input class="item" data-field="item" value="${esc(data.item||'')}" placeholder="Nome do item"></td>
-    <td><input class="link" data-field="link" value="${esc(data.link||'')}" placeholder="Loja ou link"></td>
-    <td><input class="value money" inputmode="decimal" data-field="value" value="${esc(data.value||'')}" placeholder="R$ 0,00"></td>
-    <td><select class="priority" data-field="priority">${selectOptions('priority', data.priority||'Importante')}</select></td>
-    <td><select class="status" data-field="status">${selectOptions('status', data.status||'Pesquisando')}</select></td>
-    <td><input class="notes" data-field="notes" value="${esc(data.notes||'')}" placeholder="Observações"></td>
+    <td><input class="item" data-field="item" value="${esc(data.item || "")}" placeholder="Nome do item"></td>
+    <td><input class="link" data-field="link" value="${esc(data.link || "")}" placeholder="Loja ou link"></td>
+    <td><input class="value money" inputmode="decimal" data-field="value" value="${esc(data.value || "")}" placeholder="R$ 0,00"></td>
+    <td><select class="priority" data-field="priority">${selectOptions("priority", data.priority || "Importante")}</select></td>
+    <td><select class="status" data-field="status">${selectOptions("status", data.status || "Pesquisando")}</select></td>
+    <td><input class="notes" data-field="notes" value="${esc(data.notes || "")}" placeholder="Observações"></td>
     <td><button class="remove" type="button" title="Remover" aria-label="Remover item">×</button></td>
   </tr>`;
 }
-function cardHTML(data={}){
+function cardHTML(data = {}){
   return `<article class="item-card">
     <div class="item-card-head">
       <div class="full" style="flex:1">
         <label class="field-label">Item</label>
-        <input class="item" data-field="item" value="${esc(data.item||'')}" placeholder="Nome do item">
+        <input class="item" data-field="item" value="${esc(data.item || "")}" placeholder="Nome do item">
       </div>
       <button class="remove" type="button" title="Remover" aria-label="Remover item">×</button>
     </div>
     <div class="item-card-grid">
-      <div class="full"><label class="field-label">Loja / oferta</label><input class="link" data-field="link" value="${esc(data.link||'')}" placeholder="Loja ou link"></div>
-      <div><label class="field-label">Valor</label><input class="value money" inputmode="decimal" data-field="value" value="${esc(data.value||'')}" placeholder="R$ 0,00"></div>
-      <div><label class="field-label">Prioridade</label><select class="priority" data-field="priority">${selectOptions('priority', data.priority||'Importante')}</select></div>
-      <div><label class="field-label">Status</label><select class="status" data-field="status">${selectOptions('status', data.status||'Pesquisando')}</select></div>
-      <div class="full"><label class="field-label">Observações</label><input class="notes" data-field="notes" value="${esc(data.notes||'')}" placeholder="Observações"></div>
+      <div class="full"><label class="field-label">Loja / oferta</label><input class="link" data-field="link" value="${esc(data.link || "")}" placeholder="Loja ou link"></div>
+      <div><label class="field-label">Valor</label><input class="value money" inputmode="decimal" data-field="value" value="${esc(data.value || "")}" placeholder="R$ 0,00"></div>
+      <div><label class="field-label">Prioridade</label><select class="priority" data-field="priority">${selectOptions("priority", data.priority || "Importante")}</select></div>
+      <div><label class="field-label">Status</label><select class="status" data-field="status">${selectOptions("status", data.status || "Pesquisando")}</select></div>
+      <div class="full"><label class="field-label">Observações</label><input class="notes" data-field="notes" value="${esc(data.notes || "")}" placeholder="Observações"></div>
     </div>
   </article>`;
 }
 function build(){
-  $('#tabs').innerHTML = rooms.map((r,i) => `<button class="tab ${i===active?'active':''}" data-tab="${i}" type="button"><span class="tab-icon">${r.icon}</span>${r.name}</button>`).join('');
-  $('#panels').innerHTML = rooms.map((r,i) => {
+  $("#tabs").innerHTML = rooms.map((r, i) =>
+    `<button class="tab ${i === active ? "active" : ""}" data-tab="${i}" type="button"><span class="tab-icon">${r.icon}</span>${r.name}</button>`
+  ).join("");
+  $("#panels").innerHTML = rooms.map((r, i) => {
     const list = (state[i] && state[i].length) ? state[i] : defaultList(r);
-    return `<article class="panel ${i===active?'active':''}" data-room="${i}">
+    return `<article class="panel ${i === active ? "active" : ""}" data-room="${i}">
       <header class="room-head"><div class="room-title"><span class="icon">${r.icon}</span><h2>${r.name}</h2></div><span class="room-count">${list.length} item(ns)</span></header>
-      <div class="table-wrap"><table><thead><tr><th>Item</th><th>Loja / oferta</th><th>Valor</th><th>Prioridade</th><th>Status</th><th>Observações</th><th></th></tr></thead><tbody>${list.map(rowHTML).join('')}</tbody></table></div>
-      <div class="cards">${list.map(cardHTML).join('')}</div>
-      <footer class="room-footer"><button class="add-row" type="button">＋ Adicionar item</button><span class="subtotal">Subtotal: <b>R$ 0,00</b></span></footer>
+      <div class="table-wrap"><table><thead><tr><th>Item</th><th>Loja / oferta</th><th>Valor</th><th>Prioridade</th><th>Status</th><th>Observações</th><th></th></tr></thead><tbody>${list.map(rowHTML).join("")}</tbody></table></div>
+      <div class="cards">${list.map(cardHTML).join("")}</div>
+      <footer class="room-footer"><button class="add-row" type="button">＋ Adicionar item</button><span class="subtotal">Subtotal: <b>R$&nbsp;0,00</b></span></footer>
     </article>`;
-  }).join('');
-  bind(); recalc(false);
+  }).join("");
+  bind();
+  recalc(false);
 }
-function valNum(s){ let x=String(s||'').replace(/[^0-9,.-]/g,'').replace(/\./g,'').replace(',','.'); return parseFloat(x)||0; }
-function formatMoney(input){ if(input.value.trim()) input.value = brl.format(valNum(input.value)); }
-function mobileMode(panel){ return getComputedStyle(panel.querySelector('.cards')).display !== 'none'; }
+function valNum(s){
+  let x = String(s || "").replace(/[^0-9,.-]/g, "").replace(/\./g, "").replace(",", ".");
+  return parseFloat(x) || 0;
+}
+function formatMoney(input){
+  if (input.value.trim()) input.value = brl.format(valNum(input.value));
+}
+function mobileMode(panel){
+  return getComputedStyle(panel.querySelector(".cards")).display !== "none";
+}
 function readBlocks(panel){
-  const blocks = mobileMode(panel) ? [...panel.querySelectorAll('.item-card')] : [...panel.querySelectorAll('tbody tr')];
-  return blocks.map(b => Object.fromEntries([...b.querySelectorAll('[data-field]')].map(el => [el.dataset.field, el.value])));
+  const blocks = mobileMode(panel)
+    ? [...panel.querySelectorAll(".item-card")]
+    : [...panel.querySelectorAll("tbody tr")];
+  return blocks.map(b => Object.fromEntries(
+    [...b.querySelectorAll("[data-field]")].map(el => [el.dataset.field, el.value])
+  ));
 }
-function collectState(){ const result = {}; document.querySelectorAll('.panel').forEach(p => result[p.dataset.room] = readBlocks(p)); return result; }
+function collectState(){
+  const result = {};
+  document.querySelectorAll(".panel").forEach(p => {
+    result[p.dataset.room] = readBlocks(p);
+  });
+  return result;
+}
 function scheduleSave(){
-  if(!currentUser || !homeId || !loadedFromFirebase || applyingRemote) return;
-  clearTimeout(saveTimer); setSync('saving','Salvando…');
+  if (!currentUser || !homeId || !loadedFromFirebase || applyingRemote) return;
+  clearTimeout(saveTimer);
+  setSync("saving", "Salvando…");
   saveTimer = setTimeout(async () => {
-    if(!currentUser || !plannerRef) return;
-    try{ state = collectState(); await set(plannerRef, state); setSync('saved','Salvo e sincronizado'); hideError(); }
-    catch(e){
-      console.error(e); setSync('error','Erro ao salvar');
-      if(String(e).includes('PERMISSION_DENIED') || e.code === 'PERMISSION_DENIED') showError(permissionHelp());
+    if (!currentUser || !plannerRef) return;
+    try {
+      state = collectState();
+      await set(plannerRef, state);
+      setSync("saved", "Salvo e sincronizado");
+      hideError();
+    } catch (e) {
+      console.error(e);
+      setSync("error", "Erro ao salvar");
+      if (String(e).includes("PERMISSION_DENIED") || e.code === "PERMISSION_DENIED") showError(permissionHelp());
       else showError(esc(e.message || e));
     }
   }, 550);
 }
-function recalc(shouldSave=true){
-  let total=0,count=0,all=[],totals={Essencial:0,Importante:0,Desejo:0},counts={Essencial:0,Importante:0,Desejo:0},essentialTotal=0,boughtEssential=0,boughtEssentialValue=0;
-  document.querySelectorAll('.panel').forEach(p => {
-    let sub=0, ri=+p.dataset.room, list=readBlocks(p);
+function recalc(shouldSave = true){
+  let total = 0, count = 0, all = [];
+  const totals = { Essencial: 0, Importante: 0, Desejo: 0 };
+  const counts = { Essencial: 0, Importante: 0, Desejo: 0 };
+  let essentialTotal = 0, boughtEssential = 0, boughtEssentialValue = 0;
+
+  document.querySelectorAll(".panel").forEach(p => {
+    let sub = 0;
+    const ri = +p.dataset.room;
+    const list = readBlocks(p);
     list.forEach(d => {
-      const n = valNum(d.value), priority = totals[d.priority]!==undefined ? d.priority : 'Importante';
-      if(n>0){ sub+=n; count++; totals[priority]+=n; }
-      if((d.item||'').trim()){
-        counts[priority]++; all.push({...d, room: rooms[ri]});
-        if(priority === 'Essencial'){ essentialTotal += n; if(d.status === 'Comprado'){ boughtEssential++; boughtEssentialValue += n; } }
+      const n = valNum(d.value);
+      const priority = totals[d.priority] !== undefined ? d.priority : "Importante";
+      if (n > 0) { sub += n; count++; totals[priority] += n; }
+      if ((d.item || "").trim()) {
+        counts[priority]++;
+        all.push({ ...d, room: rooms[ri] });
+        if (priority === "Essencial") {
+          essentialTotal += n;
+          if (d.status === "Comprado") {
+            boughtEssential++;
+            boughtEssentialValue += n;
+          }
+        }
       }
     });
-    p.querySelector('.subtotal b').textContent = brl.format(sub);
-    p.querySelector('.room-count').textContent = list.length + ' item(ns)';
+    p.querySelector(".subtotal b").textContent = brl.format(sub);
+    p.querySelector(".room-count").textContent = list.length + " item(ns)";
     total += sub;
   });
-  $('#grandTotal').textContent = brl.format(total); $('#summaryTotal').textContent = brl.format(total); $('#itemCount').textContent = count;
-  $('#essentialTotal').textContent = brl.format(totals.Essencial); $('#importantTotal').textContent = brl.format(totals.Importante); $('#desireTotal').textContent = brl.format(totals.Desejo);
-  $('#essentialCount').textContent = counts.Essencial + ' item(ns)'; $('#importantCount').textContent = counts.Importante + ' item(ns)'; $('#desireCount').textContent = counts.Desejo + ' item(ns)';
-  const pct = counts.Essencial ? Math.round(boughtEssential/counts.Essencial*100) : 0, remaining = Math.max(0, essentialTotal - boughtEssentialValue);
-  $('#progressPercent').textContent = pct+'%'; $('#progressFill').style.width = pct+'%';
-  $('#boughtEssential').textContent = `${boughtEssential} de ${counts.Essencial} essenciais comprados`;
-  $('#remainingEssential').textContent = 'Falta ' + brl.format(remaining);
-  $('#progressText').textContent = counts.Essencial ? (pct===100 ? 'Tudo pronto no essencial — vocês estão prontos para morar juntos! ♡' : 'Cada essencial comprado deixa o novo lar mais perto.') : 'Marquem itens como "Essencial" e status "Comprado" para acompanhar o progresso.';
-  renderSummary(all); if(shouldSave) scheduleSave();
+
+  $("#grandTotal").textContent = brl.format(total);
+  $("#summaryTotal").textContent = brl.format(total);
+  $("#itemCount").textContent = count;
+  $("#essentialTotal").textContent = brl.format(totals.Essencial);
+  $("#importantTotal").textContent = brl.format(totals.Importante);
+  $("#desireTotal").textContent = brl.format(totals.Desejo);
+  $("#essentialCount").textContent = counts.Essencial + " item(ns)";
+  $("#importantCount").textContent = counts.Importante + " item(ns)";
+  $("#desireCount").textContent = counts.Desejo + " item(ns)";
+
+  const pct = counts.Essencial ? Math.round(boughtEssential / counts.Essencial * 100) : 0;
+  const remaining = Math.max(0, essentialTotal - boughtEssentialValue);
+  $("#progressPercent").textContent = pct + "%";
+  $("#progressFill").style.width = pct + "%";
+  $("#boughtEssential").textContent = `${boughtEssential} de ${counts.Essencial} essenciais comprados`;
+  $("#remainingEssential").textContent = "Falta " + brl.format(remaining);
+  $("#progressText").textContent = counts.Essencial
+    ? (pct === 100
+      ? "Tudo pronto no essencial — vocês estão prontos para morar juntos! ♡"
+      : "Cada essencial comprado deixa o novo lar mais perto.")
+    : 'Marquem itens como "Essencial" e status "Comprado" para acompanhar o progresso.';
+
+  renderSummary(all);
+  if (shouldSave) scheduleSave();
 }
 function renderSummary(all){
-  const el = $('#summaryContent');
-  if(!all.length){ el.innerHTML = '<div class="empty">Adicionem itens aos cômodos para vê-los aqui. ♡</div>'; return; }
-  el.innerHTML = `<div class="table-wrap" style="display:block;padding:0"><table><thead><tr><th>Cômodo</th><th>Item</th><th>Loja / oferta</th><th>Valor</th><th>Prioridade</th><th>Status</th></tr></thead><tbody>${all.map(x => `<tr><td><span class="room-pill">${x.room.icon} ${esc(x.room.name)}</span></td><td><b>${esc(x.item)}</b></td><td>${x.link ? `<a href="${esc(x.link)}" target="_blank" rel="noopener" style="color:#9c5d70;word-break:break-all">${esc(x.link)}</a>` : '—'}</td><td>${x.value ? brl.format(valNum(x.value)) : '—'}</td><td>${esc(x.priority||'—')}</td><td>${esc(x.status||'—')}</td></tr>`).join('')}</tbody></table></div>`;
+  const el = $("#summaryContent");
+  if (!all.length) {
+    el.innerHTML = '<div class="empty">Adicionem itens aos cômodos para vê-los aqui. ♡</div>';
+    return;
+  }
+  el.innerHTML = `<div class="table-wrap" style="display:block;padding:0"><table><thead><tr><th>Cômodo</th><th>Item</th><th>Loja / oferta</th><th>Valor</th><th>Prioridade</th><th>Status</th></tr></thead><tbody>${
+    all.map(x => `<tr>
+      <td><span class="room-pill">${x.room.icon} ${esc(x.room.name)}</span></td>
+      <td><b>${esc(x.item)}</b></td>
+      <td>${x.link ? `<a href="${esc(x.link)}" target="_blank" rel="noopener" style="color:#9c5d70;word-break:break-all">${esc(x.link)}</a>` : "—"}</td>
+      <td>${x.value ? brl.format(valNum(x.value)) : "—"}</td>
+      <td>${esc(x.priority || "—")}</td>
+      <td>${esc(x.status || "—")}</td>
+    </tr>`).join("")
+  }</tbody></table></div>`;
 }
-function rerenderPanel(panel, list){ panel.querySelector('tbody').innerHTML = list.map(rowHTML).join(''); panel.querySelector('.cards').innerHTML = list.map(cardHTML).join(''); bindPanel(panel); }
+function rerenderPanel(panel, list){
+  panel.querySelector("tbody").innerHTML = list.map(rowHTML).join("");
+  panel.querySelector(".cards").innerHTML = list.map(cardHTML).join("");
+  bindPanel(panel);
+}
 function bindPanel(panel){
-  panel.querySelectorAll('.remove').forEach(btn => btn.onclick = () => {
-    const block = btn.closest('tr,.item-card'), isCard = block.classList.contains('item-card');
-    const blocks = isCard ? [...panel.querySelectorAll('.item-card')] : [...panel.querySelectorAll('tbody tr')];
-    const idx = blocks.indexOf(block), list = readBlocks(panel); list.splice(idx,1);
-    rerenderPanel(panel, list); recalc();
-  });
-  panel.querySelectorAll('input,select').forEach(el => {
-    el.oninput = () => {
-      const block = el.closest('tr,.item-card'), isCard = block.classList.contains('item-card');
-      const blocks = isCard ? [...panel.querySelectorAll('.item-card')] : [...panel.querySelectorAll('tbody tr')];
+  panel.querySelectorAll(".remove").forEach(btn => {
+    btn.onclick = () => {
+      const block = btn.closest("tr,.item-card");
+      const isCard = block.classList.contains("item-card");
+      const blocks = isCard
+        ? [...panel.querySelectorAll(".item-card")]
+        : [...panel.querySelectorAll("tbody tr")];
       const idx = blocks.indexOf(block);
-      const twinRoot = isCard ? panel.querySelectorAll('tbody tr')[idx] : panel.querySelectorAll('.item-card')[idx];
-      const twin = twinRoot?.querySelector(`[data-field="${el.dataset.field}"]`);
-      if(twin && twin !== el) twin.value = el.value;
+      const list = readBlocks(panel);
+      list.splice(idx, 1);
+      rerenderPanel(panel, list);
       recalc();
     };
-    el.onchange = () => { if(el.classList.contains('money')) formatMoney(el); el.oninput(); };
-    el.onblur = () => { if(el.classList.contains('money')){ formatMoney(el); el.oninput(); } };
+  });
+  panel.querySelectorAll("input,select").forEach(el => {
+    el.oninput = () => {
+      const block = el.closest("tr,.item-card");
+      const isCard = block.classList.contains("item-card");
+      const blocks = isCard
+        ? [...panel.querySelectorAll(".item-card")]
+        : [...panel.querySelectorAll("tbody tr")];
+      const idx = blocks.indexOf(block);
+      const twinRoot = isCard
+        ? panel.querySelectorAll("tbody tr")[idx]
+        : panel.querySelectorAll(".item-card")[idx];
+      const twin = twinRoot?.querySelector(`[data-field="${el.dataset.field}"]`);
+      if (twin && twin !== el) twin.value = el.value;
+      recalc();
+    };
+    el.onchange = () => {
+      if (el.classList.contains("money")) formatMoney(el);
+      el.oninput();
+    };
+    el.onblur = () => {
+      if (el.classList.contains("money")) {
+        formatMoney(el);
+        el.oninput();
+      }
+    };
   });
 }
 function bind(){
-  document.querySelectorAll('.tab').forEach(btn => btn.onclick = () => {
-    active = +btn.dataset.tab; state = collectState(); build();
-    window.scrollTo({top: $('#tabs').getBoundingClientRect().top + scrollY - 10, behavior:'smooth'});
+  document.querySelectorAll(".tab").forEach(btn => {
+    btn.onclick = () => {
+      active = +btn.dataset.tab;
+      state = collectState();
+      build();
+      window.scrollTo({ top: $("#tabs").getBoundingClientRect().top + scrollY - 10, behavior: "smooth" });
+    };
   });
-  document.querySelectorAll('.panel').forEach(panel => {
-    panel.querySelector('.add-row').onclick = () => {
-      const list = readBlocks(panel); list.push({item:'', priority:'Importante', status:'Pesquisando'});
-      rerenderPanel(panel, list); recalc();
+  document.querySelectorAll(".panel").forEach(panel => {
+    panel.querySelector(".add-row").onclick = () => {
+      const list = readBlocks(panel);
+      list.push({ item: "", priority: "Importante", status: "Pesquisando" });
+      rerenderPanel(panel, list);
+      recalc();
     };
     bindPanel(panel);
   });
 }
-$('#clearData').onclick = () => { if(confirm('Limpar todos os dados deste lar compartilhado?')){ state = {}; build(); scheduleSave(); } };
-$('#loginBtn').onclick = login; $('#overlayLoginBtn').onclick = login; $('#logoutBtn').onclick = () => signOut(auth);
-$('#copyInviteBtn').onclick = async () => {
-  const value = $('#inviteInput').value;
-  try{ await navigator.clipboard.writeText(value); $('#copyInviteBtn').textContent = 'Copiado! ✓'; }
-  catch(e){ $('#inviteInput').select(); document.execCommand('copy'); $('#copyInviteBtn').textContent = 'Copiado! ✓'; }
-  setTimeout(() => $('#copyInviteBtn').textContent = 'Copiar link', 1800);
+
+$("#clearData").onclick = () => {
+  if (confirm("Limpar todos os dados deste lar compartilhado?")) {
+    state = {};
+    build();
+    scheduleSave();
+  }
 };
-$('#leaveHomeBtn').onclick = async () => {
-  if(!currentUser || !homeId) return;
-  if(!confirm('Sair deste lar e criar um novo só seu? O atual continua existindo para os outros membros.')) return;
-  try{
-    setSync('saving','Trocando de lar…');
+
+// listeners de login — addEventListener (mais confiável)
+$("#loginBtn").addEventListener("click", (e) => {
+  e.preventDefault();
+  login();
+});
+$("#overlayLoginBtn").addEventListener("click", (e) => {
+  e.preventDefault();
+  login();
+});
+$("#logoutBtn").addEventListener("click", async () => {
+  try { await signOut(auth); }
+  catch (e) { console.error(e); }
+});
+
+$("#copyInviteBtn").onclick = async () => {
+  const value = $("#inviteInput").value;
+  try {
+    await navigator.clipboard.writeText(value);
+    $("#copyInviteBtn").textContent = "Copiado! ✓";
+  } catch {
+    $("#inviteInput").select();
+    document.execCommand("copy");
+    $("#copyInviteBtn").textContent = "Copiado! ✓";
+  }
+  setTimeout(() => { $("#copyInviteBtn").textContent = "Copiar link"; }, 1800);
+};
+
+$("#leaveHomeBtn").onclick = async () => {
+  if (!currentUser || !homeId) return;
+  if (!confirm("Sair deste lar e criar um novo só seu? O atual continua existindo para os outros membros.")) return;
+  try {
+    setSync("saving", "Trocando de lar…");
     await remove(ref(database, `households/${homeId}/members/${currentUser.uid}`));
-    homeId = push(ref(database, 'households')).key;
+    homeId = push(ref(database, "households")).key;
     await update(ref(database), {
       [`users/${currentUser.uid}/homeId`]: homeId,
       [`households/${homeId}/owner`]: currentUser.uid,
@@ -621,23 +840,22 @@ $('#leaveHomeBtn').onclick = async () => {
       [`households/${homeId}/members/${currentUser.uid}`]: memberPayload(currentUser)
     });
     await connectHome(currentUser);
-  }catch(e){
-    console.error(e); setSync('error','Erro ao trocar');
-    if(String(e).includes('PERMISSION_DENIED') || e.code === 'PERMISSION_DENIED') showError(permissionHelp());
+  } catch (e) {
+    console.error(e);
+    setSync("error", "Erro ao trocar");
+    if (String(e).includes("PERMISSION_DENIED") || e.code === "PERMISSION_DENIED") showError(permissionHelp());
     else showError(esc(e.message || e));
   }
 };
 
 const pendingInvite = getInviteHomeFromUrl();
-if(pendingInvite){
-  $('#inviteBadge').hidden = false;
-  $('#authDialogText').textContent = 'Vocês foram convidados para um lar compartilhado. Entrem com sua conta Google para começar a planejar juntos.';
+if (pendingInvite) {
+  $("#inviteBadge").hidden = false;
+  $("#authDialogText").textContent = "Vocês foram convidados para um lar compartilhado. Entrem com sua conta Google para começar a planejar juntos.";
 }
 
 async function resolveHousehold(user){
-  const userHomeRef = ref(database, `users/${user.uid}/homeId`);
-
-  if(pendingInvite){
+  if (pendingInvite) {
     homeId = pendingInvite;
     await update(ref(database), {
       [`users/${user.uid}/homeId`]: homeId,
@@ -647,14 +865,15 @@ async function resolveHousehold(user){
     return homeId;
   }
 
+  const userHomeRef = ref(database, `users/${user.uid}/homeId`);
   const snap = await get(userHomeRef);
-  if(snap.exists() && snap.val()){
+  if (snap.exists() && snap.val()) {
     homeId = snap.val();
     await set(ref(database, `households/${homeId}/members/${user.uid}`), memberPayload(user));
     return homeId;
   }
 
-  homeId = push(ref(database, 'households')).key;
+  homeId = push(ref(database, "households")).key;
   await update(ref(database), {
     [`users/${user.uid}/homeId`]: homeId,
     [`households/${homeId}/owner`]: user.uid,
@@ -665,20 +884,22 @@ async function resolveHousehold(user){
 }
 
 function detachListeners(){
-  if(remoteListener && plannerRef) off(plannerRef, 'value', remoteListener);
-  if(membersListener && membersRef) off(membersRef, 'value', membersListener);
-  remoteListener = null; membersListener = null;
+  if (remoteListener && plannerRef) off(plannerRef, "value", remoteListener);
+  if (membersListener && membersRef) off(membersRef, "value", membersListener);
+  remoteListener = null;
+  membersListener = null;
 }
 
 async function connectHome(user){
   detachListeners();
   loadedFromFirebase = false;
-  setSync('saving', 'Conectando ao lar…');
-  try{
+  setSync("saving", "Conectando ao lar…");
+  try {
     await resolveHousehold(user);
-  }catch(e){
-    console.error(e); setSync('error','Erro ao conectar');
-    if(String(e).includes('PERMISSION_DENIED') || e.code === 'PERMISSION_DENIED') showError(permissionHelp());
+  } catch (e) {
+    console.error(e);
+    setSync("error", "Erro ao conectar");
+    if (String(e).includes("PERMISSION_DENIED") || e.code === "PERMISSION_DENIED") showError(permissionHelp());
     else showError(esc(e.message || e));
     return;
   }
@@ -691,8 +912,9 @@ async function connectHome(user){
     hideError();
     renderMembers(snap.val());
   }, error => {
-    console.error(error); setSync('error','Erro nos membros');
-    if(String(error).includes('PERMISSION_DENIED') || error.code === 'PERMISSION_DENIED') showError(permissionHelp());
+    console.error(error);
+    setSync("error", "Erro nos membros");
+    if (String(error).includes("PERMISSION_DENIED") || error.code === "PERMISSION_DENIED") showError(permissionHelp());
   });
 
   remoteListener = onValue(plannerRef, snapshot => {
@@ -702,27 +924,56 @@ async function connectHome(user){
     loadedFromFirebase = true;
     build();
     applyingRemote = false;
-    setSync('saved', data ? 'Sincronizado' : 'Pronto para começar');
+    setSync("saved", data ? "Sincronizado" : "Pronto para começar");
     hideError();
   }, error => {
-    console.error(error); setSync('error','Erro ao carregar');
-    if(String(error).includes('PERMISSION_DENIED') || error.code === 'PERMISSION_DENIED') showError(permissionHelp());
+    console.error(error);
+    setSync("error", "Erro ao carregar");
+    if (String(error).includes("PERMISSION_DENIED") || error.code === "PERMISSION_DENIED") showError(permissionHelp());
     else showError(esc(error.message || error));
   });
 }
 
+// Processa retorno do redirect (caso o popup tenha falhado antes)
+getRedirectResult(auth)
+  .then(result => {
+    if (result?.user) {
+      console.log("Login via redirect ok:", result.user.email);
+      setSync("saved", "Login ok");
+    }
+  })
+  .catch(e => {
+    console.warn("getRedirectResult:", e);
+    if (e?.code) {
+      showError(`Falha ao concluir login: <code>${esc(e.code)}</code>`);
+    }
+  });
+
 onAuthStateChanged(auth, async (user) => {
   detachListeners();
-  currentUser = user; loadedFromFirebase = false; setAuthUI(user);
+  currentUser = user;
+  loadedFromFirebase = false;
+  setAuthUI(user);
 
-  if(!user){
-    homeId = null; state = {}; build(); setHouseholdUI(null); hideError(); setSync('', 'Aguardando login'); return;
+  if (!user) {
+    homeId = null;
+    state = {};
+    build();
+    setHouseholdUI(null);
+    hideError();
+    setSync("", "Aguardando login");
+    return;
   }
+
+  // garante overlay escondido mesmo se o CSS do navegador atrasar
+  hideAuthOverlay();
   await connectHome(user);
 });
 
-// Handle redirect result (for signInWithRedirect completion)
-getRedirectResult(auth).catch(e => console.warn('Redirect result:', e));
+// estado inicial visual da tela (antes do auth responder)
+build();
+setSync("", "Aguardando login");
+console.log("Nosso Lar: app carregado. Clique em Continuar com Google.");
 </script>
 </body>
 </html>
