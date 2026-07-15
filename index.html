@@ -31,6 +31,44 @@ body{
 .hero h1{position:relative;margin:0;font:700 clamp(2rem,7vw,4.1rem)/.95 Georgia,serif;letter-spacing:-.05em}
 .hero p{position:relative;max-width:620px;margin:14px 0 0;line-height:1.55;opacity:.94;font-size:.98rem}
 .hero-icons{position:absolute;right:28px;bottom:24px;font-size:1.9rem;letter-spacing:8px}
+
+/* Auth + household bars */
+.auth-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:16px 0;padding:12px 14px;border:1px solid rgba(255,255,255,.9);border-radius:16px;background:rgba(255,255,255,.84);box-shadow:var(--shadow)}
+.auth-status{display:flex;align-items:center;gap:10px;min-width:0}
+.auth-avatar{width:36px;height:36px;border-radius:50%;object-fit:cover;background:linear-gradient(135deg,#f2d2dc,#e9e2fa);border:1px solid #eadde3}
+.auth-text{min-width:0}
+.auth-text b{display:block;color:var(--wine);font-size:.88rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:330px}
+.auth-text span{display:block;color:var(--muted);font-size:.76rem;margin-top:2px}
+.auth-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.google-btn{display:inline-flex;align-items:center;gap:8px;background:#fff;color:#4e4248;border:1px solid #ded6da}
+.google-g{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;font-weight:850;font-family:Arial,sans-serif;color:#4285f4;font-size:1.05rem}
+.sync-badge{display:inline-flex;align-items:center;gap:6px;color:#6e5e67;font-size:.78rem;white-space:nowrap}
+.sync-dot{width:8px;height:8px;border-radius:50%;background:#a8a0a4}
+.sync-badge.saving .sync-dot{background:#e2a041;animation:pulse 1.1s infinite}
+.sync-badge.saved .sync-dot{background:#5baf7b}
+.sync-badge.error .sync-dot{background:#d36372}
+@keyframes pulse{50%{opacity:.35;transform:scale(.75)}}
+
+.household-bar{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin:0 0 16px;padding:16px 18px;border:1px solid rgba(255,255,255,.93);border-radius:18px;background:linear-gradient(100deg,#fff7f8,#f4f0ff);box-shadow:var(--shadow)}
+.household-info{min-width:0}
+.household-info b{display:block;color:var(--wine);font:700 1.05rem Georgia,serif}
+.household-info span{display:block;color:var(--muted);font-size:.82rem;margin-top:2px}
+.household-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.invite-link{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);border-radius:11px;padding:8px 10px;min-width:0}
+.invite-link input{border:0;background:transparent;font:inherit;color:var(--ink);min-width:150px;max-width:260px;padding:0;font-size:.82rem}
+.members-pills{display:flex;gap:6px;flex-wrap:wrap}
+.member-pill{display:inline-flex;align-items:center;gap:5px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:4px 9px 4px 4px;font-size:.76rem;color:#6d5665}
+.member-pill img{width:20px;height:20px;border-radius:50%;object-fit:cover;background:#f0e4e8}
+
+.auth-overlay{position:fixed;inset:0;z-index:999;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(60,35,45,.54);backdrop-filter:blur(7px)}
+.auth-dialog{width:min(430px,100%);padding:30px 25px;border-radius:24px;text-align:center;background:#fffdfd;box-shadow:0 22px 70px rgba(47,22,31,.3)}
+.auth-dialog .house{font-size:3rem}
+.auth-dialog h2{margin:10px 0 8px;color:var(--wine);font:700 2rem Georgia,serif}
+.auth-dialog p{color:var(--muted);line-height:1.5;margin:0 0 20px}
+.auth-dialog .google-btn{justify-content:center;width:100%;min-height:48px;font-size:.95rem}
+.auth-dialog small{display:block;color:var(--muted);line-height:1.4;margin:17px 0 0;font-size:.75rem}
+.invite-badge{display:inline-flex;align-items:center;gap:6px;background:#fff0f3;color:#a4526a;border-radius:999px;padding:6px 12px;font-size:.78rem;font-weight:700;margin-bottom:14px}
+
 .dashboard{display:grid;grid-template-columns:1.25fr .75fr;gap:14px;margin:16px 0}
 .info,.total{border:1px solid rgba(255,255,255,.9);border-radius:18px;padding:18px 18px;box-shadow:var(--shadow)}
 .info{background:rgba(255,255,255,.86)}
@@ -150,7 +188,6 @@ input:focus,select:focus{background:#fff;border-color:#d9849a;box-shadow:0 0 0 3
 .mobile-hint{display:none;margin:0 0 10px;color:var(--muted);font-size:.8rem}
 footer{text-align:center;color:var(--muted);font-size:.84rem;margin-top:22px;line-height:1.4}
 
-/* Cards on mobile instead of cramped table */
 .cards{display:none; padding:10px 12px 14px; gap:10px}
 .item-card{
   border:1px solid #f0e2e6; border-radius:16px; background:#fff; padding:12px; box-shadow:0 6px 16px rgba(91,48,63,.05)
@@ -178,9 +215,15 @@ footer{text-align:center;color:var(--muted);font-size:.84rem;margin-top:22px;lin
   .mobile-hint{display:block}
   .room-footer{padding:12px 14px 14px}
   .summary-head{align-items:flex-start}
-  /* summary stays scrollable */
   .summary-table{overflow-x:auto}
   .summary-table table{min-width:640px}
+  .auth-bar{align-items:flex-start}
+  .auth-actions{width:100%;justify-content:space-between}
+  .auth-text b{max-width:210px}
+  .auth-dialog{padding:27px 20px}
+  .household-bar{align-items:flex-start}
+  .household-actions{width:100%}
+  .invite-link input{max-width:150px}
 }
 @media (max-width:420px){
   .item-card-grid{grid-template-columns:1fr}
@@ -189,8 +232,8 @@ footer{text-align:center;color:var(--muted);font-size:.84rem;margin-top:22px;lin
 @media print{
   body{background:#fff}
   .wrap{max-width:none;padding:12px}
-  .hero,.panel,.summary,.info,.total,.budget-section{box-shadow:none;border:1px solid #ddd}
-  .toolbar,.tabs,.remove,.add-row,.mobile-hint{display:none!important}
+  .hero,.panel,.summary,.info,.total,.budget-section,.household-bar{box-shadow:none;border:1px solid #ddd}
+  .toolbar,.tabs,.remove,.add-row,.mobile-hint,.auth-bar,.household-actions{display:none!important}
   .panel{display:block!important;margin:12px 0;break-inside:avoid}
   .table-wrap{display:block!important;overflow:visible}
   .cards{display:none!important}
@@ -208,10 +251,39 @@ footer{text-align:center;color:var(--muted);font-size:.84rem;margin-top:22px;lin
     <div class="hero-icons">🏡 ✦ ♡</div>
   </section>
 
+  <section class="auth-bar" aria-live="polite">
+    <div class="auth-status">
+      <img class="auth-avatar" id="authAvatar" alt="" hidden>
+      <div class="auth-text">
+        <b id="authName">Conecte sua conta do Google</b>
+        <span id="authEmail">Para salvar e sincronizar o planejamento de vocês.</span>
+      </div>
+    </div>
+    <div class="auth-actions">
+      <span class="sync-badge" id="syncBadge"><i class="sync-dot"></i><span id="syncText">Aguardando login</span></span>
+      <button class="google-btn" id="loginBtn" type="button"><span class="google-g">G</span>Entrar com Google</button>
+      <button class="soft" id="logoutBtn" type="button" hidden>Sair</button>
+    </div>
+  </section>
+
+  <section class="household-bar" id="householdBar" hidden>
+    <div class="household-info">
+      <b id="householdTitle">Nosso lar</b>
+      <span id="householdSubtitle">Compartilhem o link abaixo para planejar juntos.</span>
+      <div class="members-pills" id="membersPills" style="margin-top:8px"></div>
+    </div>
+    <div class="household-actions">
+      <div class="invite-link">
+        <input id="inviteInput" readonly value="">
+        <button class="soft" id="copyInviteBtn" type="button">Copiar link</button>
+      </div>
+    </div>
+  </section>
+
   <section class="dashboard">
     <div class="info">
       <b>Como funciona</b>
-      <p>Escolham um cômodo nas abas, guardem links e valores das ofertas. No celular, cada item vira um cartão fácil de preencher. O orçamento e o progresso atualizam sozinhos.</p>
+      <p>Entrem com a conta Google de cada um e compartilhem o link de convite do lar. As alterações são salvas automaticamente e sincronizadas entre os dois na hora.</p>
     </div>
     <div class="total">
       <span>Investimento estimado</span>
@@ -262,7 +334,7 @@ footer{text-align:center;color:var(--muted);font-size:.84rem;margin-top:22px;lin
   </section>
 
   <div class="toolbar">
-    <span class="hint">✦ Suas alterações ficam salvas neste navegador. No celular, a lista vira cartões.</span>
+    <span class="hint">✦ Tudo é salvo automaticamente na nuvem e sincronizado entre vocês dois.</span>
     <button class="soft" id="clearData" type="button">Limpar dados</button>
     <button class="primary" onclick="window.print()" type="button">Salvar em PDF</button>
   </div>
@@ -285,7 +357,38 @@ footer{text-align:center;color:var(--muted);font-size:.84rem;margin-top:22px;lin
   <footer>Feito com carinho para o lar que vocês estão construindo ✨</footer>
 </main>
 
-<script>
+<div class="auth-overlay" id="authOverlay">
+  <section class="auth-dialog" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+    <div class="house">🏡</div>
+    <div id="inviteBadge" hidden class="invite-badge">💌 Convite recebido para um lar compartilhado</div>
+    <h2 id="authTitle">O lar de vocês, sincronizado</h2>
+    <p id="authDialogText">Entrem com uma conta Google para criar (ou entrar em) o lar compartilhado e planejar tudo juntos, em tempo real.</p>
+    <button class="google-btn" id="overlayLoginBtn" type="button"><span class="google-g">G</span>Continuar com Google</button>
+    <small>Depois de entrar, vocês verão um link de convite para compartilhar com o outro.</small>
+  </section>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getDatabase, ref, set, get, push, onValue, off, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCRG1zdkBnvKX9zSouv4kGOWArwhZHgcNU",
+  authDomain: "nossolar-b1d31.firebaseapp.com",
+  databaseURL: "https://nossolar-b1d31-default-rtdb.firebaseio.com",
+  projectId: "nossolar-b1d31",
+  storageBucket: "nossolar-b1d31.firebasestorage.app",
+  messagingSenderId: "106656203786",
+  appId: "1:106656203786:web:f3d69f503f35d48de7cbf3"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const database = getDatabase(app);
+const googleProvider = new GoogleAuthProvider();
+googleProvider.setCustomParameters({ prompt: 'select_account' });
+
 const rooms = [
   {name:'Quarto do casal', icon:'🛏️', items:['Cama / colchão','Guarda-roupa','Criado-mudo','Cabeceira','Cortinas / persianas','Luminária','Jogo de cama']},
   {name:'Quarto 2 — nosso espaço', icon:'🎮', items:['Mesa gamer / trabalho','Cadeira','TV / projetor','Sofá / puff','Espelho para pole','Tapete','Prateleiras / decoração']},
@@ -296,22 +399,85 @@ const rooms = [
   {name:'Área de serviço', icon:'🧺', items:['Máquina de lavar','Varal','Cesto de roupa','Armário / prateleira','Tábua de passar','Ferro','Itens de limpeza']}
 ];
 
-const key = 'nossoLarPlannerV3';
-let state = JSON.parse(localStorage.getItem(key) || '{}');
+let state = {};
 let active = 0;
+let currentUser = null;
+let homeId = null;
+let plannerRef = null;
+let membersRef = null;
+let remoteListener = null;
+let membersListener = null;
+let loadedFromFirebase = false;
+let saveTimer = null;
 const brl = new Intl.NumberFormat('pt-BR', {style:'currency', currency:'BRL'});
 
-function esc(s){
-  return String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const $ = s => document.querySelector(s);
+function esc(s){ return String(s ?? '').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+function getInviteHomeFromUrl(){
+  const params = new URLSearchParams(location.search);
+  return params.get('lar') || params.get('home');
+}
+function cleanUrl(){
+  const url = new URL(location.href);
+  url.searchParams.delete('lar');
+  url.searchParams.delete('home');
+  history.replaceState({}, '', url.pathname + (url.search ? url.search : '') + url.hash);
+}
+function inviteUrlFor(id){
+  const url = new URL(location.href);
+  url.search = '';
+  url.hash = '';
+  url.searchParams.set('lar', id);
+  return url.toString();
 }
 
+function setSync(status, message){
+  const badge = $('#syncBadge'); badge.className = 'sync-badge ' + status; $('#syncText').textContent = message;
+}
+function setAuthUI(user){
+  const logged = !!user;
+  $('#authOverlay').hidden = logged;
+  $('#loginBtn').hidden = logged;
+  $('#logoutBtn').hidden = !logged;
+  const avatar = $('#authAvatar');
+  if(logged){
+    $('#authName').textContent = user.displayName || 'Conta Google conectada';
+    $('#authEmail').textContent = user.email || 'Planejamento sincronizado na nuvem';
+    if(user.photoURL){ avatar.src = user.photoURL; avatar.hidden = false; } else avatar.hidden = true;
+  } else {
+    avatar.hidden = true;
+    $('#authName').textContent = 'Conecte sua conta do Google';
+    $('#authEmail').textContent = 'Para salvar e sincronizar o planejamento de vocês.';
+  }
+}
+function setHouseholdUI(id){
+  const bar = $('#householdBar');
+  if(!id){ bar.hidden = true; return; }
+  bar.hidden = false;
+  $('#inviteInput').value = inviteUrlFor(id);
+}
+function renderMembers(members){
+  const wrap = $('#membersPills');
+  if(!members){ wrap.innerHTML=''; return; }
+  const list = Object.values(members);
+  wrap.innerHTML = list.map(m => `<span class="member-pill">${m.photoURL ? `<img src="${esc(m.photoURL)}" alt="">` : '👤'} ${esc(m.name || m.email || 'Alguém')}</span>`).join('');
+}
+
+async function login(){
+  try{ setSync('saving','Abrindo login…'); await signInWithPopup(auth, googleProvider); }
+  catch(error){
+    console.error(error);
+    setSync('error', error.code === 'auth/popup-closed-by-user' ? 'Login cancelado' : 'Não foi possível entrar');
+    alert('Não foi possível entrar com o Google. Verifiquem se o domínio do GitHub Pages foi autorizado no Firebase Authentication.');
+  }
+}
+
+function defaultList(room){ return room.items.map(item => ({item, priority:'Importante', status:'Pesquisando'})); }
 function selectOptions(field, value){
-  const options = field === 'priority'
-    ? ['Essencial','Importante','Desejo']
-    : ['Pesquisando','Achamos!','Comprado'];
+  const options = field === 'priority' ? ['Essencial','Importante','Desejo'] : ['Pesquisando','Achamos!','Comprado'];
   return options.map(o => `<option value="${o}" ${value===o?'selected':''}>${o}</option>`).join('');
 }
-
 function rowHTML(data={}){
   return `<tr>
     <td><input class="item" data-field="item" value="${esc(data.item||'')}" placeholder="Nome do item"></td>
@@ -323,7 +489,6 @@ function rowHTML(data={}){
     <td><button class="remove" type="button" title="Remover" aria-label="Remover item">×</button></td>
   </tr>`;
 }
-
 function cardHTML(data={}){
   return `<article class="item-card">
     <div class="item-card-head">
@@ -357,316 +522,176 @@ function cardHTML(data={}){
     </div>
   </article>`;
 }
-
-function defaultList(room){
-  return room.items.map(item => ({item, priority:'Importante', status:'Pesquisando'}));
-}
-
 function build(){
-  document.getElementById('tabs').innerHTML = rooms.map((r,i) =>
-    `<button class="tab ${i===active?'active':''}" data-tab="${i}" type="button"><span class="tab-icon">${r.icon}</span>${r.name}</button>`
-  ).join('');
-
-  document.getElementById('panels').innerHTML = rooms.map((r,i) => {
+  $('#tabs').innerHTML = rooms.map((r,i) => `<button class="tab ${i===active?'active':''}" data-tab="${i}" type="button"><span class="tab-icon">${r.icon}</span>${r.name}</button>`).join('');
+  $('#panels').innerHTML = rooms.map((r,i) => {
     const list = (state[i] && state[i].length) ? state[i] : defaultList(r);
     return `<article class="panel ${i===active?'active':''}" data-room="${i}">
-      <header class="room-head">
-        <div class="room-title"><span class="icon">${r.icon}</span><h2>${r.name}</h2></div>
-        <span class="room-count">${list.length} item(ns)</span>
-      </header>
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Item</th><th>Loja / oferta</th><th>Valor</th>
-              <th>Prioridade</th><th>Status</th><th>Observações</th><th></th>
-            </tr>
-          </thead>
-          <tbody>${list.map(rowHTML).join('')}</tbody>
-        </table>
-      </div>
+      <header class="room-head"><div class="room-title"><span class="icon">${r.icon}</span><h2>${r.name}</h2></div><span class="room-count">${list.length} item(ns)</span></header>
+      <div class="table-wrap"><table><thead><tr><th>Item</th><th>Loja / oferta</th><th>Valor</th><th>Prioridade</th><th>Status</th><th>Observações</th><th></th></tr></thead><tbody>${list.map(rowHTML).join('')}</tbody></table></div>
       <div class="cards">${list.map(cardHTML).join('')}</div>
-      <footer class="room-footer">
-        <button class="add-row" type="button">＋ Adicionar item</button>
-        <span class="subtotal">Subtotal: <b>R$&nbsp;0,00</b></span>
-      </footer>
+      <footer class="room-footer"><button class="add-row" type="button">＋ Adicionar item</button><span class="subtotal">Subtotal: <b>R$&nbsp;0,00</b></span></footer>
     </article>`;
   }).join('');
-
-  bind();
-  recalc();
+  bind(); recalc(false);
 }
-
-function valNum(s){
-  let x = String(s||'').replace(/[^0-9,.-]/g,'').replace(/\./g,'').replace(',','.');
-  return parseFloat(x) || 0;
-}
-
-function formatMoney(input){
-  if(input.value.trim()) input.value = brl.format(valNum(input.value));
-}
-
+function valNum(s){ let x=String(s||'').replace(/[^0-9,.-]/g,'').replace(/\./g,'').replace(',','.'); return parseFloat(x)||0; }
+function formatMoney(input){ if(input.value.trim()) input.value = brl.format(valNum(input.value)); }
+function mobileMode(panel){ return getComputedStyle(panel.querySelector('.cards')).display !== 'none'; }
 function readBlocks(panel){
-  // Prefer visible structure; on desktop tbody rows, on mobile cards
-  const tableBlocks = [...panel.querySelectorAll('tbody tr')];
-  const cardBlocks = [...panel.querySelectorAll('.item-card')];
-  // Both views exist; use table as source of truth for count after desktop edits,
-  // but when user is on mobile they edit cards. Keep them synced on input.
-  // For persistence we always gather from both carefully: if cards exist, combine by index using cards if mobile.
-  // Safer: always read table rows as primary state, and ensure cards are regenerated from state on rebuild.
-  // To support both without desync, on every input we write from the changed element into both views? Simpler approach:
-  // Read from whichever is currently edited, but store unified list by matching field values from table if table display not none.
-  const useCards = window.getComputedStyle(panel.querySelector('.cards')).display !== 'none';
-  const blocks = useCards ? cardBlocks : tableBlocks;
-  return blocks.map(block => Object.fromEntries(
-    [...block.querySelectorAll('[data-field]')].map(el => [el.dataset.field, el.value])
-  ));
+  const blocks = mobileMode(panel) ? [...panel.querySelectorAll('.item-card')] : [...panel.querySelectorAll('tbody tr')];
+  return blocks.map(b => Object.fromEntries([...b.querySelectorAll('[data-field]')].map(el => [el.dataset.field, el.value])));
 }
-
-function persist(){
-  state = {};
+function collectState(){ const result = {}; document.querySelectorAll('.panel').forEach(p => result[p.dataset.room] = readBlocks(p)); return result; }
+function scheduleSave(){
+  if(!currentUser || !homeId || !loadedFromFirebase) return;
+  clearTimeout(saveTimer); setSync('saving','Salvando…');
+  saveTimer = setTimeout(async () => {
+    if(!currentUser || !plannerRef) return;
+    try{ state = collectState(); await set(plannerRef, state); setSync('saved','Salvo e sincronizado'); }
+    catch(e){ console.error(e); setSync('error','Erro ao salvar'); }
+  }, 550);
+}
+function recalc(shouldSave=true){
+  let total=0,count=0,all=[],totals={Essencial:0,Importante:0,Desejo:0},counts={Essencial:0,Importante:0,Desejo:0},essentialTotal=0,boughtEssential=0,boughtEssentialValue=0;
   document.querySelectorAll('.panel').forEach(p => {
-    state[p.dataset.room] = readBlocks(p);
-  });
-  localStorage.setItem(key, JSON.stringify(state));
-}
-
-function syncTwinViews(panel){
-  // Keep table and cards in sync after edits by rewriting both from current readBlocks
-  const list = readBlocks(panel);
-  const tbody = panel.querySelector('tbody');
-  const cards = panel.querySelector('.cards');
-  // preserve focus field if possible
-  const activeEl = document.activeElement;
-  const activeField = activeEl && activeEl.dataset ? activeEl.dataset.field : null;
-  const activeBlock = activeEl ? activeEl.closest('tr, .item-card') : null;
-  let activeIndex = -1;
-  if(activeBlock){
-    const siblings = activeBlock.classList.contains('item-card')
-      ? [...panel.querySelectorAll('.item-card')]
-      : [...panel.querySelectorAll('tbody tr')];
-    activeIndex = siblings.indexOf(activeBlock);
-  }
-  tbody.innerHTML = list.map(rowHTML).join('');
-  cards.innerHTML = list.map(cardHTML).join('');
-  // restore focus
-  if(activeIndex >= 0 && activeField){
-    const view = window.getComputedStyle(cards).display !== 'none' ? cards : tbody;
-    const blocks = window.getComputedStyle(cards).display !== 'none'
-      ? [...cards.querySelectorAll('.item-card')]
-      : [...tbody.querySelectorAll('tr')];
-    const target = blocks[activeIndex]?.querySelector(`[data-field="${activeField}"]`);
-    if(target){
-      target.focus();
-      if(typeof target.selectionStart === 'number'){
-        const len = target.value.length;
-        try { target.setSelectionRange(len,len); } catch(e){}
-      }
-    }
-  }
-  bindPanel(panel);
-}
-
-function collectAll(){
-  let total=0, count=0, all=[];
-  const totals = {Essencial:0, Importante:0, Desejo:0};
-  const counts = {Essencial:0, Importante:0, Desejo:0};
-  let essentialTotal=0, boughtEssential=0, boughtEssentialValue=0;
-
-  document.querySelectorAll('.panel').forEach(p => {
-    let sub=0;
-    const ri = +p.dataset.room;
-    const list = readBlocks(p);
+    let sub=0, ri=+p.dataset.room, list=readBlocks(p);
     list.forEach(d => {
-      const n = valNum(d.value);
-      const priority = totals[d.priority] !== undefined ? d.priority : 'Importante';
-      if(n > 0){
-        sub += n;
-        count++;
-        totals[priority] += n;
-      }
+      const n = valNum(d.value), priority = totals[d.priority]!==undefined ? d.priority : 'Importante';
+      if(n>0){ sub+=n; count++; totals[priority]+=n; }
       if((d.item||'').trim()){
-        counts[priority]++;
-        all.push({...d, room: rooms[ri]});
-        if(priority === 'Essencial'){
-          essentialTotal += n;
-          if(d.status === 'Comprado'){
-            boughtEssential++;
-            boughtEssentialValue += n;
-          }
-        }
+        counts[priority]++; all.push({...d, room: rooms[ri]});
+        if(priority === 'Essencial'){ essentialTotal += n; if(d.status === 'Comprado'){ boughtEssential++; boughtEssentialValue += n; } }
       }
     });
     p.querySelector('.subtotal b').textContent = brl.format(sub);
     p.querySelector('.room-count').textContent = list.length + ' item(ns)';
     total += sub;
   });
-
-  document.getElementById('grandTotal').textContent = brl.format(total);
-  document.getElementById('summaryTotal').textContent = brl.format(total);
-  document.getElementById('itemCount').textContent = count;
-  document.getElementById('essentialTotal').textContent = brl.format(totals.Essencial);
-  document.getElementById('importantTotal').textContent = brl.format(totals.Importante);
-  document.getElementById('desireTotal').textContent = brl.format(totals.Desejo);
-  document.getElementById('essentialCount').textContent = counts.Essencial + ' item(ns)';
-  document.getElementById('importantCount').textContent = counts.Importante + ' item(ns)';
-  document.getElementById('desireCount').textContent = counts.Desejo + ' item(ns)';
-
-  const pct = counts.Essencial ? Math.round((boughtEssential / counts.Essencial) * 100) : 0;
-  const remaining = Math.max(0, essentialTotal - boughtEssentialValue);
-  document.getElementById('progressPercent').textContent = pct + '%';
-  document.getElementById('progressFill').style.width = pct + '%';
-  document.getElementById('boughtEssential').textContent = boughtEssential + ' de ' + counts.Essencial + ' essenciais comprados';
-  document.getElementById('remainingEssential').textContent = 'Falta ' + brl.format(remaining);
-  document.getElementById('progressText').textContent = counts.Essencial
-    ? (pct === 100
-        ? 'Tudo pronto no essencial — vocês estão prontos para morar juntos! ♡'
-        : 'Cada essencial comprado deixa o novo lar mais perto.')
-    : 'Marquem itens como “Essencial” e status “Comprado” para acompanhar o progresso.';
-
-  renderSummary(all);
-  persist();
+  $('#grandTotal').textContent = brl.format(total); $('#summaryTotal').textContent = brl.format(total); $('#itemCount').textContent = count;
+  $('#essentialTotal').textContent = brl.format(totals.Essencial); $('#importantTotal').textContent = brl.format(totals.Importante); $('#desireTotal').textContent = brl.format(totals.Desejo);
+  $('#essentialCount').textContent = counts.Essencial + ' item(ns)'; $('#importantCount').textContent = counts.Importante + ' item(ns)'; $('#desireCount').textContent = counts.Desejo + ' item(ns)';
+  const pct = counts.Essencial ? Math.round(boughtEssential/counts.Essencial*100) : 0, remaining = Math.max(0, essentialTotal - boughtEssentialValue);
+  $('#progressPercent').textContent = pct+'%'; $('#progressFill').style.width = pct+'%';
+  $('#boughtEssential').textContent = `${boughtEssential} de ${counts.Essencial} essenciais comprados`;
+  $('#remainingEssential').textContent = 'Falta ' + brl.format(remaining);
+  $('#progressText').textContent = counts.Essencial ? (pct===100 ? 'Tudo pronto no essencial — vocês estão prontos para morar juntos! ♡' : 'Cada essencial comprado deixa o novo lar mais perto.') : 'Marquem itens como “Essencial” e status “Comprado” para acompanhar o progresso.';
+  renderSummary(all); if(shouldSave) scheduleSave();
 }
-
-function recalc(){ collectAll(); }
-
 function renderSummary(all){
-  const el = document.getElementById('summaryContent');
-  if(!all.length){
-    el.innerHTML = '<div class="empty">Adicionem itens aos cômodos para vê-los aqui. ♡</div>';
-    return;
-  }
-  el.innerHTML = `<div class="table-wrap" style="display:block;padding:0">
-    <table>
-      <thead>
-        <tr>
-          <th>Cômodo</th><th>Item</th><th>Loja / oferta</th><th>Valor</th><th>Prioridade</th><th>Status</th>
-        </tr>
-      </thead>
-      <tbody>
-        ${all.map(x => `<tr>
-          <td><span class="room-pill">${x.room.icon} ${esc(x.room.name)}</span></td>
-          <td><b>${esc(x.item)}</b></td>
-          <td>${x.link ? `<a href="${esc(x.link)}" target="_blank" rel="noopener" style="color:#9c5d70;word-break:break-all">${esc(x.link)}</a>` : '—'}</td>
-          <td>${x.value ? brl.format(valNum(x.value)) : '—'}</td>
-          <td>${esc(x.priority||'—')}</td>
-          <td>${esc(x.status||'—')}</td>
-        </tr>`).join('')}
-      </tbody>
-    </table>
-  </div>`;
+  const el = $('#summaryContent');
+  if(!all.length){ el.innerHTML = '<div class="empty">Adicionem itens aos cômodos para vê-los aqui. ♡</div>'; return; }
+  el.innerHTML = `<div class="table-wrap" style="display:block;padding:0"><table><thead><tr><th>Cômodo</th><th>Item</th><th>Loja / oferta</th><th>Valor</th><th>Prioridade</th><th>Status</th></tr></thead><tbody>${all.map(x => `<tr><td><span class="room-pill">${x.room.icon} ${esc(x.room.name)}</span></td><td><b>${esc(x.item)}</b></td><td>${x.link ? `<a href="${esc(x.link)}" target="_blank" rel="noopener" style="color:#9c5d70;word-break:break-all">${esc(x.link)}</a>` : '—'}</td><td>${x.value ? brl.format(valNum(x.value)) : '—'}</td><td>${esc(x.priority||'—')}</td><td>${esc(x.status||'—')}</td></tr>`).join('')}</tbody></table></div>`;
 }
-
+function rerenderPanel(panel, list){ panel.querySelector('tbody').innerHTML = list.map(rowHTML).join(''); panel.querySelector('.cards').innerHTML = list.map(cardHTML).join(''); bindPanel(panel); }
 function bindPanel(panel){
-  panel.querySelectorAll('.remove').forEach(btn => {
-    btn.onclick = () => {
-      const block = btn.closest('tr, .item-card');
-      const list = readBlocks(panel);
-      const siblings = block.classList.contains('item-card')
-        ? [...panel.querySelectorAll('.item-card')]
-        : [...panel.querySelectorAll('tbody tr')];
-      const idx = siblings.indexOf(block);
-      if(idx >= 0) list.splice(idx,1);
-      // write both views from remaining list
-      panel.querySelector('tbody').innerHTML = list.map(rowHTML).join('');
-      panel.querySelector('.cards').innerHTML = list.map(cardHTML).join('');
-      bindPanel(panel);
-      collectAll();
-    };
+  panel.querySelectorAll('.remove').forEach(btn => btn.onclick = () => {
+    const block = btn.closest('tr,.item-card'), isCard = block.classList.contains('item-card');
+    const blocks = isCard ? [...panel.querySelectorAll('.item-card')] : [...panel.querySelectorAll('tbody tr')];
+    const idx = blocks.indexOf(block), list = readBlocks(panel); list.splice(idx,1);
+    rerenderPanel(panel, list); recalc();
   });
-
   panel.querySelectorAll('input,select').forEach(el => {
     el.oninput = () => {
-      // lightweight: update twin field with same index+field when possible
-      const block = el.closest('tr, .item-card');
-      if(!block) return collectAll();
-      const isCard = block.classList.contains('item-card');
-      const siblings = isCard
-        ? [...panel.querySelectorAll('.item-card')]
-        : [...panel.querySelectorAll('tbody tr')];
-      const idx = siblings.indexOf(block);
-      const twinRoot = isCard
-        ? panel.querySelectorAll('tbody tr')[idx]
-        : panel.querySelectorAll('.item-card')[idx];
-      if(twinRoot){
-        const twin = twinRoot.querySelector(`[data-field="${el.dataset.field}"]`);
-        if(twin && twin !== el) twin.value = el.value;
-      }
-      collectAll();
+      const block = el.closest('tr,.item-card'), isCard = block.classList.contains('item-card');
+      const blocks = isCard ? [...panel.querySelectorAll('.item-card')] : [...panel.querySelectorAll('tbody tr')];
+      const idx = blocks.indexOf(block);
+      const twinRoot = isCard ? panel.querySelectorAll('tbody tr')[idx] : panel.querySelectorAll('.item-card')[idx];
+      const twin = twinRoot?.querySelector(`[data-field="${el.dataset.field}"]`);
+      if(twin && twin !== el) twin.value = el.value;
+      recalc();
     };
-    el.onchange = () => {
-      if(el.classList.contains('money')) formatMoney(el);
-      // format twin too
-      const block = el.closest('tr, .item-card');
-      if(block){
-        const isCard = block.classList.contains('item-card');
-        const siblings = isCard ? [...panel.querySelectorAll('.item-card')] : [...panel.querySelectorAll('tbody tr')];
-        const idx = siblings.indexOf(block);
-        const twinRoot = isCard ? panel.querySelectorAll('tbody tr')[idx] : panel.querySelectorAll('.item-card')[idx];
-        if(twinRoot){
-          const twin = twinRoot.querySelector(`[data-field="${el.dataset.field}"]`);
-          if(twin && twin !== el){
-            twin.value = el.value;
-          }
-        }
-      }
-      collectAll();
-    };
-    el.onblur = () => {
-      if(el.classList.contains('money')){
-        formatMoney(el);
-        el.onchange();
-      }
-    };
+    el.onchange = () => { if(el.classList.contains('money')) formatMoney(el); el.oninput(); };
+    el.onblur = () => { if(el.classList.contains('money')){ formatMoney(el); el.oninput(); } };
   });
 }
-
 function bind(){
-  document.querySelectorAll('.tab').forEach(btn => {
-    btn.onclick = () => {
-      active = +btn.dataset.tab;
-      // do not rebuild everything from scratch if avoidable; save then rebuild for simplicity
-      persist();
-      build();
-      const tabs = document.querySelector('.tabs');
-      window.scrollTo({top: tabs.getBoundingClientRect().top + scrollY - 10, behavior:'smooth'});
-    };
+  document.querySelectorAll('.tab').forEach(btn => btn.onclick = () => {
+    active = +btn.dataset.tab; state = collectState(); build();
+    window.scrollTo({top: $('#tabs').getBoundingClientRect().top + scrollY - 10, behavior:'smooth'});
   });
-
   document.querySelectorAll('.panel').forEach(panel => {
     panel.querySelector('.add-row').onclick = () => {
-      const list = readBlocks(panel);
-      list.push({item:'', priority:'Importante', status:'Pesquisando'});
-      panel.querySelector('tbody').innerHTML = list.map(rowHTML).join('');
-      panel.querySelector('.cards').innerHTML = list.map(cardHTML).join('');
-      bindPanel(panel);
-      collectAll();
+      const list = readBlocks(panel); list.push({item:'', priority:'Importante', status:'Pesquisando'});
+      rerenderPanel(panel, list); recalc();
     };
     bindPanel(panel);
   });
 }
-
-document.getElementById('clearData').onclick = () => {
-  if(confirm('Limpar todos os dados salvos?')){
-    localStorage.removeItem(key);
-    state = {};
-    build();
-  }
+$('#clearData').onclick = () => { if(confirm('Limpar todos os dados deste lar compartilhado?')){ state = {}; build(); scheduleSave(); } };
+$('#loginBtn').onclick = login; $('#overlayLoginBtn').onclick = login; $('#logoutBtn').onclick = () => signOut(auth);
+$('#copyInviteBtn').onclick = async () => {
+  const value = $('#inviteInput').value;
+  try{ await navigator.clipboard.writeText(value); $('#copyInviteBtn').textContent = 'Copiado! ✓'; }
+  catch(e){ $('#inviteInput').select(); document.execCommand('copy'); $('#copyInviteBtn').textContent = 'Copiado! ✓'; }
+  setTimeout(() => $('#copyInviteBtn').textContent = 'Copiar link', 1800);
 };
 
-// migrate old V2 data if present and V3 empty
-(function migrate(){
-  if(Object.keys(state).length) return;
-  try{
-    const old = JSON.parse(localStorage.getItem('nossoLarPlannerV2')||'{}');
-    if(old && Object.keys(old).length){
-      state = old;
-      localStorage.setItem(key, JSON.stringify(state));
-    }
-  }catch(e){}
-})();
+const pendingInvite = getInviteHomeFromUrl();
+if(pendingInvite){
+  $('#inviteBadge').hidden = false;
+  $('#authDialogText').textContent = 'Vocês foram convidados para um lar compartilhado. Entrem com sua conta Google para começar a planejar juntos.';
+}
 
-build();
+async function resolveHousehold(user){
+  const userHomeRef = ref(database, `users/${user.uid}/homeId`);
+
+  if(pendingInvite){
+    homeId = pendingInvite;
+    await set(ref(database, `households/${homeId}/members/${user.uid}`), {
+      name: user.displayName || '', email: user.email || '', photoURL: user.photoURL || '', joinedAt: serverTimestamp()
+    });
+    await set(userHomeRef, homeId);
+    cleanUrl();
+    return;
+  }
+
+  const snap = await get(userHomeRef);
+  if(snap.exists()){
+    homeId = snap.val();
+    await set(ref(database, `households/${homeId}/members/${user.uid}`), {
+      name: user.displayName || '', email: user.email || '', photoURL: user.photoURL || '', joinedAt: serverTimestamp()
+    });
+    return;
+  }
+
+  homeId = push(ref(database, 'households')).key;
+  await set(ref(database, `households/${homeId}/owner`), user.uid);
+  await set(ref(database, `households/${homeId}/members/${user.uid}`), {
+    name: user.displayName || '', email: user.email || '', photoURL: user.photoURL || '', joinedAt: serverTimestamp()
+  });
+  await set(userHomeRef, homeId);
+}
+
+onAuthStateChanged(auth, async (user) => {
+  if(remoteListener && plannerRef) off(plannerRef, 'value', remoteListener);
+  if(membersListener && membersRef) off(membersRef, 'value', membersListener);
+  remoteListener = null; membersListener = null;
+
+  currentUser = user; loadedFromFirebase = false; setAuthUI(user);
+
+  if(!user){ homeId = null; state = {}; build(); setHouseholdUI(null); setSync('', 'Aguardando login'); return; }
+
+  setSync('saving', 'Conectando ao lar…');
+  try{ await resolveHousehold(user); }
+  catch(e){ console.error(e); setSync('error','Erro ao conectar'); alert('Não foi possível conectar ao lar compartilhado. Verifiquem as regras do Realtime Database.'); return; }
+
+  setHouseholdUI(homeId);
+  plannerRef = ref(database, `households/${homeId}/rooms`);
+  membersRef = ref(database, `households/${homeId}/members`);
+
+  membersListener = onValue(membersRef, snap => renderMembers(snap.val()));
+
+  remoteListener = onValue(plannerRef, snapshot => {
+    const data = snapshot.val();
+    state = data || {};
+    loadedFromFirebase = true; build();
+    setSync('saved', data ? 'Sincronizado' : 'Pronto para começar');
+  }, error => {
+    console.error(error); setSync('error','Erro ao carregar');
+    alert('Não foi possível carregar os dados. Verifiquem as regras do Realtime Database no Firebase.');
+  });
+});
 </script>
 </body>
 </html>
