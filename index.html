@@ -32,7 +32,6 @@ body{
 .hero p{position:relative;max-width:620px;margin:14px 0 0;line-height:1.55;opacity:.94;font-size:.98rem}
 .hero-icons{position:absolute;right:28px;bottom:24px;font-size:1.9rem;letter-spacing:8px}
 
-/* Auth + household bars */
 .auth-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:16px 0;padding:12px 14px;border:1px solid rgba(255,255,255,.9);border-radius:16px;background:rgba(255,255,255,.84);box-shadow:var(--shadow)}
 .auth-status{display:flex;align-items:center;gap:10px;min-width:0}
 .auth-avatar{width:36px;height:36px;border-radius:50%;object-fit:cover;background:linear-gradient(135deg,#f2d2dc,#e9e2fa);border:1px solid #eadde3}
@@ -60,6 +59,14 @@ body{
 .member-pill{display:inline-flex;align-items:center;gap:5px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:4px 9px 4px 4px;font-size:.76rem;color:#6d5665}
 .member-pill img{width:20px;height:20px;border-radius:50%;object-fit:cover;background:#f0e4e8}
 
+.error-banner{
+  display:none; margin:0 0 16px; padding:14px 16px; border-radius:16px;
+  background:#fff1f3; border:1px solid #f2c9d2; color:#8a4055; line-height:1.5; font-size:.9rem
+}
+.error-banner.show{display:block}
+.error-banner b{display:block; margin-bottom:4px}
+.error-banner code{font-size:.78rem; background:#ffe7ec; padding:1px 5px; border-radius:6px; word-break:break-word}
+
 .auth-overlay{position:fixed;inset:0;z-index:999;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(60,35,45,.54);backdrop-filter:blur(7px)}
 .auth-dialog{width:min(430px,100%);padding:30px 25px;border-radius:24px;text-align:center;background:#fffdfd;box-shadow:0 22px 70px rgba(47,22,31,.3)}
 .auth-dialog .house{font-size:3rem}
@@ -78,10 +85,7 @@ body{
 .total span{display:block;text-transform:uppercase;letter-spacing:.1em;font-size:.7rem;font-weight:800;opacity:.9}
 .total strong{display:block;margin:4px 0;font:700 clamp(1.7rem,5vw,2.2rem) Georgia,serif}
 .total small{opacity:.92;font-size:.88rem}
-.budget-section{
-  margin:4px 0 18px; padding:18px; border:1px solid rgba(255,255,255,.93); border-radius:22px;
-  background:rgba(255,255,255,.8); box-shadow:var(--shadow);
-}
+.budget-section{margin:4px 0 18px; padding:18px; border:1px solid rgba(255,255,255,.93); border-radius:22px; background:rgba(255,255,255,.8); box-shadow:var(--shadow)}
 .budget-title{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-bottom:14px;flex-wrap:wrap}
 .kicker{margin:0 0 4px;color:var(--rose);font-size:.68rem;font-weight:850;letter-spacing:.12em;text-transform:uppercase}
 .budget-title h2{margin:0;color:var(--wine);font:700 clamp(1.35rem,4vw,1.7rem) Georgia,serif}
@@ -94,11 +98,7 @@ body{
 .budget-card.essential{background:#fff0f3;border-color:#f6d5de;color:#a84f68}
 .budget-card.important{background:#f5f1ff;border-color:#e5dcf7;color:#706091}
 .budget-card.desire{background:#fff7e8;border-color:#f5e5bd;color:#a27739}
-.progress-card{
-  display:grid;grid-template-columns:.9fr 1.5fr;align-items:center;gap:18px;
-  margin-top:12px;padding:18px;border-radius:16px;
-  background:linear-gradient(105deg,#673a48,#a66378);color:#fff
-}
+.progress-card{display:grid;grid-template-columns:.9fr 1.5fr;align-items:center;gap:18px;margin-top:12px;padding:18px;border-radius:16px;background:linear-gradient(105deg,#673a48,#a66378);color:#fff}
 .progress-label{display:block;text-transform:uppercase;letter-spacing:.1em;font-size:.66rem;font-weight:800;opacity:.85}
 .progress-copy strong{display:block;margin:2px 0 4px;font:700 clamp(1.8rem,6vw,2.25rem) Georgia,serif}
 .progress-copy p{margin:0;font-size:.88rem;line-height:1.4;opacity:.93}
@@ -108,76 +108,42 @@ body{
 .progress-meta b{white-space:nowrap}
 .toolbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:16px 0 12px}
 .toolbar .hint{color:var(--muted);font-size:.86rem;margin-right:auto;line-height:1.35}
-button{
-  border:0; font:700 .88rem Inter,ui-sans-serif,system-ui,sans-serif; cursor:pointer;
-  transition:.18s transform,.18s box-shadow; border-radius:11px; padding:11px 14px; min-height:42px
-}
+button{border:0; font:700 .88rem Inter,ui-sans-serif,system-ui,sans-serif; cursor:pointer; transition:.18s transform,.18s box-shadow; border-radius:11px; padding:11px 14px; min-height:42px}
 button:hover{transform:translateY(-1px)}
 .soft{background:#fff;border:1px solid var(--line);color:#6d5260}
 .primary{background:var(--wine);color:#fff;box-shadow:0 8px 17px rgba(100,56,71,.2)}
-.tabs{
-  display:flex; gap:8px; overflow-x:auto; padding:6px 2px 12px; margin:0 -2px 2px;
-  scrollbar-width:thin; -webkit-overflow-scrolling:touch; scroll-snap-type:x proximity
-}
-.tab{
-  white-space:nowrap; background:rgba(255,255,255,.8); border:1px solid var(--line); color:#695866;
-  padding:11px 14px; scroll-snap-align:start; flex:0 0 auto
-}
+.tabs{display:flex; gap:8px; overflow-x:auto; padding:6px 2px 12px; margin:0 -2px 2px; scrollbar-width:thin; -webkit-overflow-scrolling:touch; scroll-snap-type:x proximity}
+.tab{white-space:nowrap; background:rgba(255,255,255,.8); border:1px solid var(--line); color:#695866; padding:11px 14px; scroll-snap-align:start; flex:0 0 auto}
 .tab.active{background:var(--wine);color:#fff;border-color:var(--wine);box-shadow:0 8px 16px rgba(100,56,71,.2)}
 .tab .tab-icon{margin-right:6px}
-.panel{
-  display:none; background:rgba(255,255,255,.93); border:1px solid rgba(255,255,255,.95);
-  border-radius:20px; box-shadow:var(--shadow); overflow:hidden
-}
+.panel{display:none; background:rgba(255,255,255,.93); border:1px solid rgba(255,255,255,.95); border-radius:20px; box-shadow:var(--shadow); overflow:hidden}
 .panel.active{display:block;animation:fade .22s ease}
 @keyframes fade{from{opacity:.4;transform:translateY(4px)}to{opacity:1;transform:none}}
-.room-head{
-  display:flex; align-items:center; justify-content:space-between; gap:10px;
-  padding:18px 16px; background:linear-gradient(100deg,var(--pink2),var(--lav))
-}
+.room-head{display:flex; align-items:center; justify-content:space-between; gap:10px; padding:18px 16px; background:linear-gradient(100deg,var(--pink2),var(--lav))}
 .room-title{display:flex;align-items:center;gap:10px;min-width:0}
 .room-title .icon{font-size:1.5rem;flex:0 0 auto}
 .room-title h2{margin:0;color:var(--wine);font:700 clamp(1.2rem,4vw,1.55rem) Georgia,serif}
 .room-count{font-size:.78rem;color:var(--muted);background:#fff;border:1px solid var(--line);border-radius:999px;padding:6px 10px;white-space:nowrap}
 .table-wrap{overflow-x:auto;padding:12px 12px 4px; -webkit-overflow-scrolling:touch}
-table{width:100%;min-width:820px;border-collapse:collapse}
-th{
-  padding:10px 8px; text-align:left; color:var(--muted); font-size:.68rem;
-  letter-spacing:.07em; text-transform:uppercase; white-space:nowrap
-}
+table{width:100%;min-width:900px;border-collapse:collapse}
+th{padding:10px 8px; text-align:left; color:var(--muted); font-size:.68rem; letter-spacing:.07em; text-transform:uppercase; white-space:nowrap}
 td{padding:6px 5px;border-top:1px solid #f2e9ec;vertical-align:middle}
-input,select{
-  width:100%; min-height:44px; padding:10px 10px; border:1px solid transparent; border-radius:10px;
-  background:transparent; color:var(--ink); font:inherit; outline:none; appearance:auto
-}
-select{
-  min-width:132px; padding-right:28px; white-space:nowrap; text-overflow:clip;
-  background-color:rgba(255,255,255,.55)
-}
+input,select{width:100%; min-height:44px; padding:10px 12px; border:1px solid transparent; border-radius:10px; background:transparent; color:var(--ink); font:inherit; outline:none; appearance:auto}
+select{min-width:148px; padding-right:32px; white-space:nowrap; overflow:visible; text-overflow:clip; background-color:rgba(255,255,255,.55)}
 input:hover,select:hover{background:#fff;border-color:#eee0e5}
 input:focus,select:focus{background:#fff;border-color:#d9849a;box-shadow:0 0 0 3px rgba(215,123,145,.13)}
 .item{min-width:150px;font-weight:700}
 .link{min-width:140px;color:#946476}
 .value{min-width:118px;text-align:right;font-variant-numeric:tabular-nums}
-.priority{min-width:132px}
-.status{min-width:138px}
+.priority,.status{min-width:148px}
 .notes{min-width:140px}
 .remove{width:40px;height:40px;min-height:40px;padding:0;color:#ad6275;background:#fff0f3;font-size:1.2rem}
-.room-footer{
-  display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;
-  padding:14px 16px 16px;border-top:1px solid #f4eaed
-}
+.room-footer{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:14px 16px 16px;border-top:1px solid #f4eaed}
 .add-row{color:var(--rose);background:#fff0f3}
 .subtotal{font-size:.9rem;color:var(--muted)}
 .subtotal b{color:var(--rose);font-size:1.04rem}
-.summary{
-  margin-top:22px; background:rgba(255,255,255,.93); border:1px solid rgba(255,255,255,.95);
-  border-radius:20px; box-shadow:var(--shadow); overflow:hidden
-}
-.summary-head{
-  display:flex;align-items:end;justify-content:space-between;gap:12px;flex-wrap:wrap;
-  padding:20px 16px 14px; background:linear-gradient(100deg,#fff5f7,#f2edff)
-}
+.summary{margin-top:22px; background:rgba(255,255,255,.93); border:1px solid rgba(255,255,255,.95); border-radius:20px; box-shadow:var(--shadow); overflow:hidden}
+.summary-head{display:flex;align-items:end;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:20px 16px 14px; background:linear-gradient(100deg,#fff5f7,#f2edff)}
 .summary-head h2{color:var(--wine);margin:0;font:700 clamp(1.3rem,4vw,1.65rem) Georgia,serif}
 .summary-head p{margin:4px 0 0;color:var(--muted);font-size:.88rem}
 .summary-total{color:var(--rose);font:700 1.2rem Georgia,serif;white-space:nowrap}
@@ -187,58 +153,40 @@ input:focus,select:focus{background:#fff;border-color:#d9849a;box-shadow:0 0 0 3
 .empty{padding:28px 16px;text-align:center;color:var(--muted)}
 .mobile-hint{display:none;margin:0 0 10px;color:var(--muted);font-size:.8rem}
 footer{text-align:center;color:var(--muted);font-size:.84rem;margin-top:22px;line-height:1.4}
-
 .cards{display:none; padding:10px 12px 14px; gap:10px}
-.item-card{
-  border:1px solid #f0e2e6; border-radius:16px; background:#fff; padding:12px; box-shadow:0 6px 16px rgba(91,48,63,.05)
-}
+.item-card{border:1px solid #f0e2e6; border-radius:16px; background:#fff; padding:12px; box-shadow:0 6px 16px rgba(91,48,63,.05)}
 .item-card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:8px}
 .item-card-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .item-card .full{grid-column:1 / -1}
 .field-label{display:block;margin:0 0 4px;color:var(--muted);font-size:.68rem;font-weight:800;letter-spacing:.07em;text-transform:uppercase}
 .item-card input,.item-card select{background:#faf7f8;border-color:#f0e4e8}
+.item-card select{min-width:0; width:100%}
 
-@media (max-width:900px){
-  .dashboard{grid-template-columns:1fr}
-  .progress-card{grid-template-columns:1fr;gap:14px}
-}
+@media (max-width:900px){.dashboard{grid-template-columns:1fr}.progress-card{grid-template-columns:1fr;gap:14px}}
 @media (max-width:720px){
   .wrap{padding:14px 12px calc(36px + var(--safe-bottom))}
   .hero{padding:24px 18px}
   .hero-icons{display:none}
   .budget-grid{grid-template-columns:1fr}
-  .budget-card{min-height:auto}
   .toolbar .hint{width:100%}
-  .room-head{padding:16px 14px}
   .table-wrap{display:none}
   .cards{display:grid}
   .mobile-hint{display:block}
-  .room-footer{padding:12px 14px 14px}
-  .summary-head{align-items:flex-start}
-  .summary-table{overflow-x:auto}
-  .summary-table table{min-width:640px}
   .auth-bar{align-items:flex-start}
   .auth-actions{width:100%;justify-content:space-between}
   .auth-text b{max-width:210px}
-  .auth-dialog{padding:27px 20px}
-  .household-bar{align-items:flex-start}
   .household-actions{width:100%}
   .invite-link input{max-width:150px}
+  .summary-table{overflow-x:auto}
 }
-@media (max-width:420px){
-  .item-card-grid{grid-template-columns:1fr}
-  .budget-title h2,.hero h1{letter-spacing:-.03em}
-}
+@media (max-width:420px){.item-card-grid{grid-template-columns:1fr}}
 @media print{
-  body{background:#fff}
-  .wrap{max-width:none;padding:12px}
+  body{background:#fff}.wrap{max-width:none;padding:12px}
   .hero,.panel,.summary,.info,.total,.budget-section,.household-bar{box-shadow:none;border:1px solid #ddd}
-  .toolbar,.tabs,.remove,.add-row,.mobile-hint,.auth-bar,.household-actions{display:none!important}
+  .toolbar,.tabs,.remove,.add-row,.mobile-hint,.auth-bar,.household-actions,.error-banner,.auth-overlay{display:none!important}
   .panel{display:block!important;margin:12px 0;break-inside:avoid}
-  .table-wrap{display:block!important;overflow:visible}
-  .cards{display:none!important}
-  .hero{color:#333;background:#fff}
-  .hero:after,.hero-icons{display:none}
+  .table-wrap{display:block!important;overflow:visible}.cards{display:none!important}
+  .hero{color:#333;background:#fff}.hero:after,.hero-icons{display:none}
 }
 </style>
 </head>
@@ -266,6 +214,11 @@ footer{text-align:center;color:var(--muted);font-size:.84rem;margin-top:22px;lin
     </div>
   </section>
 
+  <div class="error-banner" id="errorBanner" role="alert">
+    <b>Não foi possível acessar o banco de dados</b>
+    <span id="errorBannerText"></span>
+  </div>
+
   <section class="household-bar" id="householdBar" hidden>
     <div class="household-info">
       <b id="householdTitle">Nosso lar</b>
@@ -277,6 +230,7 @@ footer{text-align:center;color:var(--muted);font-size:.84rem;margin-top:22px;lin
         <input id="inviteInput" readonly value="">
         <button class="soft" id="copyInviteBtn" type="button">Copiar link</button>
       </div>
+      <button class="soft" id="leaveHomeBtn" type="button" title="Sair deste lar e criar um novo">Trocar de lar</button>
     </div>
   </section>
 
@@ -287,7 +241,7 @@ footer{text-align:center;color:var(--muted);font-size:.84rem;margin-top:22px;lin
     </div>
     <div class="total">
       <span>Investimento estimado</span>
-      <strong id="grandTotal">R$&nbsp;0,00</strong>
+      <strong id="grandTotal">R$ 0,00</strong>
       <small><span id="itemCount">0</span> itens com valor preenchido</small>
     </div>
   </section>
@@ -301,21 +255,9 @@ footer{text-align:center;color:var(--muted);font-size:.84rem;margin-top:22px;lin
       <span class="budget-caption">Acompanhem os essenciais primeiro ✦</span>
     </div>
     <div class="budget-grid">
-      <article class="budget-card essential">
-        <span>Essenciais</span>
-        <strong id="essentialTotal">R$&nbsp;0,00</strong>
-        <small id="essentialCount">0 itens</small>
-      </article>
-      <article class="budget-card important">
-        <span>Importantes</span>
-        <strong id="importantTotal">R$&nbsp;0,00</strong>
-        <small id="importantCount">0 itens</small>
-      </article>
-      <article class="budget-card desire">
-        <span>Desejos</span>
-        <strong id="desireTotal">R$&nbsp;0,00</strong>
-        <small id="desireCount">0 itens</small>
-      </article>
+      <article class="budget-card essential"><span>Essenciais</span><strong id="essentialTotal">R$ 0,00</strong><small id="essentialCount">0 itens</small></article>
+      <article class="budget-card important"><span>Importantes</span><strong id="importantTotal">R$ 0,00</strong><small id="importantCount">0 itens</small></article>
+      <article class="budget-card desire"><span>Desejos</span><strong id="desireTotal">R$ 0,00</strong><small id="desireCount">0 itens</small></article>
     </div>
     <article class="progress-card">
       <div class="progress-copy">
@@ -327,7 +269,7 @@ footer{text-align:center;color:var(--muted);font-size:.84rem;margin-top:22px;lin
         <div class="progress-track"><i id="progressFill"></i></div>
         <div class="progress-meta">
           <span id="boughtEssential">0 de 0 essenciais comprados</span>
-          <b id="remainingEssential">Falta R$&nbsp;0,00</b>
+          <b id="remainingEssential">Falta R$ 0,00</b>
         </div>
       </div>
     </article>
@@ -349,11 +291,10 @@ footer{text-align:center;color:var(--muted);font-size:.84rem;margin-top:22px;lin
         <h2>Lista final de compras</h2>
         <p>Todos os itens que vocês cadastraram, em um só lugar.</p>
       </div>
-      <div class="summary-total" id="summaryTotal">R$&nbsp;0,00</div>
+      <div class="summary-total" id="summaryTotal">R$ 0,00</div>
     </div>
     <div class="summary-table" id="summaryContent"></div>
   </section>
-
   <footer>Feito com carinho para o lar que vocês estão construindo ✨</footer>
 </main>
 
@@ -364,14 +305,14 @@ footer{text-align:center;color:var(--muted);font-size:.84rem;margin-top:22px;lin
     <h2 id="authTitle">O lar de vocês, sincronizado</h2>
     <p id="authDialogText">Entrem com uma conta Google para criar (ou entrar em) o lar compartilhado e planejar tudo juntos, em tempo real.</p>
     <button class="google-btn" id="overlayLoginBtn" type="button"><span class="google-g">G</span>Continuar com Google</button>
-    <small>Depois de entrar, vocês verão um link de convite para compartilhar com o outro.</small>
+    <small>Vocês serão redirecionados para o Google e voltarão logados automaticamente.</small>
   </section>
 </div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { getDatabase, ref, set, get, push, onValue, off, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+import { getAuth, GoogleAuthProvider, signInWithRedirect, signOut, onAuthStateChanged, getRedirectResult } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getDatabase, ref, set, get, update, push, remove, onValue, off, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCRG1zdkBnvKX9zSouv4kGOWArwhZHgcNU",
@@ -409,10 +350,11 @@ let remoteListener = null;
 let membersListener = null;
 let loadedFromFirebase = false;
 let saveTimer = null;
+let applyingRemote = false;
 const brl = new Intl.NumberFormat('pt-BR', {style:'currency', currency:'BRL'});
 
 const $ = s => document.querySelector(s);
-function esc(s){ return String(s ?? '').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function esc(s){ return String(s ?? '').replace(/[&<>"']/g,c=>({'&':'&','<':'<','>':'>','"':'"',"'":'''}[c])); }
 
 function getInviteHomeFromUrl(){
   const params = new URLSearchParams(location.search);
@@ -431,9 +373,45 @@ function inviteUrlFor(id){
   url.searchParams.set('lar', id);
   return url.toString();
 }
-
 function setSync(status, message){
   const badge = $('#syncBadge'); badge.className = 'sync-badge ' + status; $('#syncText').textContent = message;
+}
+function showError(message){
+  const banner = $('#errorBanner');
+  $('#errorBannerText').innerHTML = message;
+  banner.classList.add('show');
+}
+function hideError(){ $('#errorBanner').classList.remove('show'); }
+function permissionHelp(){
+  return `Isso quase sempre é configuração das <b>regras do Realtime Database</b>, não do login Google.<br>
+  No Firebase Console → <b>Realtime Database → Rules</b>, cole as regras abaixo e clique em <b>Publicar</b>.<br><br>
+  <code style="display:block;white-space:pre;text-align:left;padding:10px;overflow:auto">{
+  "rules": {
+    "users": {
+      "$uid": {
+        ".read": "auth != null && auth.uid == $uid",
+        ".write": "auth != null && auth.uid == $uid"
+      }
+    },
+    "households": {
+      "$homeId": {
+        ".read": "auth != null && data.child('members').child(auth.uid).exists()",
+        "owner": { ".write": "auth != null && (!data.exists() || root.child('households').child($homeId).child('members').child(auth.uid).exists())" },
+        "createdAt": { ".write": "auth != null" },
+        "members": {
+          "$memberId": {
+            ".write": "auth != null && auth.uid == $memberId"
+          }
+        },
+        "rooms": {
+          ".write": "auth != null && root.child('households').child($homeId).child('members').child(auth.uid).exists()"
+        }
+      }
+    }
+  }</code>
+  <br>Atalho para liberar tudo enquanto testa (usuário autenticado):
+  <code style="display:block;white-space:pre;text-align:left;padding:10px;overflow:auto">{
+  "rules": { ".read": "auth != null", ".write": "auth != null" }</code>`;
 }
 function setAuthUI(user){
   const logged = !!user;
@@ -462,14 +440,27 @@ function renderMembers(members){
   if(!members){ wrap.innerHTML=''; return; }
   const list = Object.values(members);
   wrap.innerHTML = list.map(m => `<span class="member-pill">${m.photoURL ? `<img src="${esc(m.photoURL)}" alt="">` : '👤'} ${esc(m.name || m.email || 'Alguém')}</span>`).join('');
+  const count = list.length;
+  $('#householdSubtitle').textContent = count > 1
+    ? `${count} pessoas neste lar — alterações sincronizam em tempo real.`
+    : 'Compartilhem o link abaixo para o outro entrar no mesmo lar.';
 }
-
+function memberPayload(user){
+  return {
+    name: user.displayName || '',
+    email: user.email || '',
+    photoURL: user.photoURL || '',
+    joinedAt: serverTimestamp()
+  };
+}
 async function login(){
-  try{ setSync('saving','Abrindo login…'); await signInWithPopup(auth, googleProvider); }
-  catch(error){
+  try{
+    setSync('saving','Redirecionando para o Google…');
+    await signInWithRedirect(auth, googleProvider);
+  }catch(error){
     console.error(error);
-    setSync('error', error.code === 'auth/popup-closed-by-user' ? 'Login cancelado' : 'Não foi possível entrar');
-    alert('Não foi possível entrar com o Google. Verifiquem se o domínio do GitHub Pages foi autorizado no Firebase Authentication.');
+    setSync('error', 'Não foi possível redirecionar');
+    alert('Erro ao redirecionar para o Google. Tente novamente.');
   }
 }
 
@@ -499,26 +490,11 @@ function cardHTML(data={}){
       <button class="remove" type="button" title="Remover" aria-label="Remover item">×</button>
     </div>
     <div class="item-card-grid">
-      <div class="full">
-        <label class="field-label">Loja / oferta</label>
-        <input class="link" data-field="link" value="${esc(data.link||'')}" placeholder="Loja ou link">
-      </div>
-      <div>
-        <label class="field-label">Valor</label>
-        <input class="value money" inputmode="decimal" data-field="value" value="${esc(data.value||'')}" placeholder="R$ 0,00">
-      </div>
-      <div>
-        <label class="field-label">Prioridade</label>
-        <select class="priority" data-field="priority">${selectOptions('priority', data.priority||'Importante')}</select>
-      </div>
-      <div>
-        <label class="field-label">Status</label>
-        <select class="status" data-field="status">${selectOptions('status', data.status||'Pesquisando')}</select>
-      </div>
-      <div class="full">
-        <label class="field-label">Observações</label>
-        <input class="notes" data-field="notes" value="${esc(data.notes||'')}" placeholder="Observações">
-      </div>
+      <div class="full"><label class="field-label">Loja / oferta</label><input class="link" data-field="link" value="${esc(data.link||'')}" placeholder="Loja ou link"></div>
+      <div><label class="field-label">Valor</label><input class="value money" inputmode="decimal" data-field="value" value="${esc(data.value||'')}" placeholder="R$ 0,00"></div>
+      <div><label class="field-label">Prioridade</label><select class="priority" data-field="priority">${selectOptions('priority', data.priority||'Importante')}</select></div>
+      <div><label class="field-label">Status</label><select class="status" data-field="status">${selectOptions('status', data.status||'Pesquisando')}</select></div>
+      <div class="full"><label class="field-label">Observações</label><input class="notes" data-field="notes" value="${esc(data.notes||'')}" placeholder="Observações"></div>
     </div>
   </article>`;
 }
@@ -530,7 +506,7 @@ function build(){
       <header class="room-head"><div class="room-title"><span class="icon">${r.icon}</span><h2>${r.name}</h2></div><span class="room-count">${list.length} item(ns)</span></header>
       <div class="table-wrap"><table><thead><tr><th>Item</th><th>Loja / oferta</th><th>Valor</th><th>Prioridade</th><th>Status</th><th>Observações</th><th></th></tr></thead><tbody>${list.map(rowHTML).join('')}</tbody></table></div>
       <div class="cards">${list.map(cardHTML).join('')}</div>
-      <footer class="room-footer"><button class="add-row" type="button">＋ Adicionar item</button><span class="subtotal">Subtotal: <b>R$&nbsp;0,00</b></span></footer>
+      <footer class="room-footer"><button class="add-row" type="button">＋ Adicionar item</button><span class="subtotal">Subtotal: <b>R$ 0,00</b></span></footer>
     </article>`;
   }).join('');
   bind(); recalc(false);
@@ -544,12 +520,16 @@ function readBlocks(panel){
 }
 function collectState(){ const result = {}; document.querySelectorAll('.panel').forEach(p => result[p.dataset.room] = readBlocks(p)); return result; }
 function scheduleSave(){
-  if(!currentUser || !homeId || !loadedFromFirebase) return;
+  if(!currentUser || !homeId || !loadedFromFirebase || applyingRemote) return;
   clearTimeout(saveTimer); setSync('saving','Salvando…');
   saveTimer = setTimeout(async () => {
     if(!currentUser || !plannerRef) return;
-    try{ state = collectState(); await set(plannerRef, state); setSync('saved','Salvo e sincronizado'); }
-    catch(e){ console.error(e); setSync('error','Erro ao salvar'); }
+    try{ state = collectState(); await set(plannerRef, state); setSync('saved','Salvo e sincronizado'); hideError(); }
+    catch(e){
+      console.error(e); setSync('error','Erro ao salvar');
+      if(String(e).includes('PERMISSION_DENIED') || e.code === 'PERMISSION_DENIED') showError(permissionHelp());
+      else showError(esc(e.message || e));
+    }
   }, 550);
 }
 function recalc(shouldSave=true){
@@ -575,7 +555,7 @@ function recalc(shouldSave=true){
   $('#progressPercent').textContent = pct+'%'; $('#progressFill').style.width = pct+'%';
   $('#boughtEssential').textContent = `${boughtEssential} de ${counts.Essencial} essenciais comprados`;
   $('#remainingEssential').textContent = 'Falta ' + brl.format(remaining);
-  $('#progressText').textContent = counts.Essencial ? (pct===100 ? 'Tudo pronto no essencial — vocês estão prontos para morar juntos! ♡' : 'Cada essencial comprado deixa o novo lar mais perto.') : 'Marquem itens como “Essencial” e status “Comprado” para acompanhar o progresso.';
+  $('#progressText').textContent = counts.Essencial ? (pct===100 ? 'Tudo pronto no essencial — vocês estão prontos para morar juntos! ♡' : 'Cada essencial comprado deixa o novo lar mais perto.') : 'Marquem itens como "Essencial" e status "Comprado" para acompanhar o progresso.';
   renderSummary(all); if(shouldSave) scheduleSave();
 }
 function renderSummary(all){
@@ -626,6 +606,26 @@ $('#copyInviteBtn').onclick = async () => {
   catch(e){ $('#inviteInput').select(); document.execCommand('copy'); $('#copyInviteBtn').textContent = 'Copiado! ✓'; }
   setTimeout(() => $('#copyInviteBtn').textContent = 'Copiar link', 1800);
 };
+$('#leaveHomeBtn').onclick = async () => {
+  if(!currentUser || !homeId) return;
+  if(!confirm('Sair deste lar e criar um novo só seu? O atual continua existindo para os outros membros.')) return;
+  try{
+    setSync('saving','Trocando de lar…');
+    await remove(ref(database, `households/${homeId}/members/${currentUser.uid}`));
+    homeId = push(ref(database, 'households')).key;
+    await update(ref(database), {
+      [`users/${currentUser.uid}/homeId`]: homeId,
+      [`households/${homeId}/owner`]: currentUser.uid,
+      [`households/${homeId}/createdAt`]: serverTimestamp(),
+      [`households/${homeId}/members/${currentUser.uid}`]: memberPayload(currentUser)
+    });
+    await connectHome(currentUser);
+  }catch(e){
+    console.error(e); setSync('error','Erro ao trocar');
+    if(String(e).includes('PERMISSION_DENIED') || e.code === 'PERMISSION_DENIED') showError(permissionHelp());
+    else showError(esc(e.message || e));
+  }
+};
 
 const pendingInvite = getInviteHomeFromUrl();
 if(pendingInvite){
@@ -638,60 +638,90 @@ async function resolveHousehold(user){
 
   if(pendingInvite){
     homeId = pendingInvite;
-    await set(ref(database, `households/${homeId}/members/${user.uid}`), {
-      name: user.displayName || '', email: user.email || '', photoURL: user.photoURL || '', joinedAt: serverTimestamp()
+    await update(ref(database), {
+      [`users/${user.uid}/homeId`]: homeId,
+      [`households/${homeId}/members/${user.uid}`]: memberPayload(user)
     });
-    await set(userHomeRef, homeId);
     cleanUrl();
-    return;
+    return homeId;
   }
 
   const snap = await get(userHomeRef);
-  if(snap.exists()){
+  if(snap.exists() && snap.val()){
     homeId = snap.val();
-    await set(ref(database, `households/${homeId}/members/${user.uid}`), {
-      name: user.displayName || '', email: user.email || '', photoURL: user.photoURL || '', joinedAt: serverTimestamp()
-    });
-    return;
+    await set(ref(database, `households/${homeId}/members/${user.uid}`), memberPayload(user));
+    return homeId;
   }
 
   homeId = push(ref(database, 'households')).key;
-  await set(ref(database, `households/${homeId}/owner`), user.uid);
-  await set(ref(database, `households/${homeId}/members/${user.uid}`), {
-    name: user.displayName || '', email: user.email || '', photoURL: user.photoURL || '', joinedAt: serverTimestamp()
+  await update(ref(database), {
+    [`users/${user.uid}/homeId`]: homeId,
+    [`households/${homeId}/owner`]: user.uid,
+    [`households/${homeId}/createdAt`]: serverTimestamp(),
+    [`households/${homeId}/members/${user.uid}`]: memberPayload(user)
   });
-  await set(userHomeRef, homeId);
+  return homeId;
 }
 
-onAuthStateChanged(auth, async (user) => {
+function detachListeners(){
   if(remoteListener && plannerRef) off(plannerRef, 'value', remoteListener);
   if(membersListener && membersRef) off(membersRef, 'value', membersListener);
   remoteListener = null; membersListener = null;
+}
 
-  currentUser = user; loadedFromFirebase = false; setAuthUI(user);
-
-  if(!user){ homeId = null; state = {}; build(); setHouseholdUI(null); setSync('', 'Aguardando login'); return; }
-
+async function connectHome(user){
+  detachListeners();
+  loadedFromFirebase = false;
   setSync('saving', 'Conectando ao lar…');
-  try{ await resolveHousehold(user); }
-  catch(e){ console.error(e); setSync('error','Erro ao conectar'); alert('Não foi possível conectar ao lar compartilhado. Verifiquem as regras do Realtime Database.'); return; }
+  try{
+    await resolveHousehold(user);
+  }catch(e){
+    console.error(e); setSync('error','Erro ao conectar');
+    if(String(e).includes('PERMISSION_DENIED') || e.code === 'PERMISSION_DENIED') showError(permissionHelp());
+    else showError(esc(e.message || e));
+    return;
+  }
 
   setHouseholdUI(homeId);
   plannerRef = ref(database, `households/${homeId}/rooms`);
   membersRef = ref(database, `households/${homeId}/members`);
 
-  membersListener = onValue(membersRef, snap => renderMembers(snap.val()));
+  membersListener = onValue(membersRef, snap => {
+    hideError();
+    renderMembers(snap.val());
+  }, error => {
+    console.error(error); setSync('error','Erro nos membros');
+    if(String(error).includes('PERMISSION_DENIED') || error.code === 'PERMISSION_DENIED') showError(permissionHelp());
+  });
 
   remoteListener = onValue(plannerRef, snapshot => {
+    applyingRemote = true;
     const data = snapshot.val();
     state = data || {};
-    loadedFromFirebase = true; build();
+    loadedFromFirebase = true;
+    build();
+    applyingRemote = false;
     setSync('saved', data ? 'Sincronizado' : 'Pronto para começar');
+    hideError();
   }, error => {
     console.error(error); setSync('error','Erro ao carregar');
-    alert('Não foi possível carregar os dados. Verifiquem as regras do Realtime Database no Firebase.');
+    if(String(error).includes('PERMISSION_DENIED') || error.code === 'PERMISSION_DENIED') showError(permissionHelp());
+    else showError(esc(error.message || error));
   });
+}
+
+onAuthStateChanged(auth, async (user) => {
+  detachListeners();
+  currentUser = user; loadedFromFirebase = false; setAuthUI(user);
+
+  if(!user){
+    homeId = null; state = {}; build(); setHouseholdUI(null); hideError(); setSync('', 'Aguardando login'); return;
+  }
+  await connectHome(user);
 });
+
+// Handle redirect result (for signInWithRedirect completion)
+getRedirectResult(auth).catch(e => console.warn('Redirect result:', e));
 </script>
 </body>
 </html>
